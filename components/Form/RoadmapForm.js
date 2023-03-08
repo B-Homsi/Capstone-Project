@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { uid } from "uid";
 import styled from "styled-components";
 
 export default function RoadmapForm({ onAddRoadmap, onCancel }) {
   const [title, setTitle] = useState("");
-  const [topics, setTopics] = useState(["", "", ""]);
+  const [topics, setTopics] = useState([
+    { id: uid(), title: "" },
+    { id: uid(), title: "" },
+    { id: uid(), title: "" },
+  ]);
   const [color, setColor] = useState("#ffffff");
 
   const handleTitleChange = (event) => {
@@ -11,19 +16,20 @@ export default function RoadmapForm({ onAddRoadmap, onCancel }) {
     setTitle(value);
   };
 
-  const handleTopicChange = (index, event) => {
+  const handleTopicChange = (id, event) => {
     const newTopics = [...topics];
-    newTopics[index] = event.target.value.slice(0, 16);
+    const index = newTopics.findIndex((topic) => topic.id === id);
+    newTopics[index].title = event.target.value.slice(0, 16);
     setTopics(newTopics);
   };
 
   const handleAddTopic = () => {
-    setTopics([...topics, ""]);
+    const newTopics = [...topics, { id: uid(), title: "" }];
+    setTopics(newTopics);
   };
 
-  const handleDeleteTopic = (index) => {
-    const newTopics = [...topics];
-    newTopics.splice(index, 1);
+  const handleDeleteTopic = (id) => {
+    const newTopics = topics.filter((topic) => topic.id !== id);
     setTopics(newTopics);
   };
 
@@ -54,21 +60,21 @@ export default function RoadmapForm({ onAddRoadmap, onCancel }) {
 
       <Styledul>
         {topics.map((topic, index) => (
-          <li key={index}>
+          <li key={topic.id}>
             <label>
               {index + 1}:{" "}
               <input
                 type="text"
-                value={topic}
-                onChange={(event) => handleTopicChange(index, event)}
+                value={topic.title}
+                onChange={(event) => handleTopicChange(topic.id, event)}
                 maxLength={16}
                 required
               />
             </label>
-            <button type="button" onClick={() => handleDeleteTopic(index)}>
+            <button type="button" onClick={() => handleDeleteTopic(topic.id)}>
               X
             </button>
-            <span>{`${topic.length}/16`}</span>
+            <span>{`${topic.title.length || 0}/16`}</span>
           </li>
         ))}
       </Styledul>
