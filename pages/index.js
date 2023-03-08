@@ -1,13 +1,10 @@
-import styled from "styled-components";
-
+import Roadmaps from "../components/Roadmaps/Roadmaps";
 export default function Home() {
   return (
     <main>
-      <Heading>🐋Capstone Whales Template🐋</Heading>
+      <Roadmaps />
     </main>
   );
 }
 
-const Heading = styled.h1`
-text-align: center;
-`;
+
