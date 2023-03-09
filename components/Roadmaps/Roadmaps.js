@@ -2,13 +2,15 @@ import { useState } from "react";
 import RoadmapForm from "../Form/RoadmapForm";
 import styled from "styled-components";
 import { uid } from "uid";
+import RoadmapCard from "./RoadmapCard";
 
 export default function Roadmaps() {
   const [roadmaps, setRoadmaps] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
   const handleAddRoadmap = (roadmap) => {
-    setRoadmaps([...roadmaps, roadmap]);
+    const newRoadmap = { ...roadmap, id: uid() };
+    setRoadmaps([...roadmaps, newRoadmap]);
     setShowForm(false);
   };
 
@@ -20,9 +22,8 @@ export default function Roadmaps() {
     setShowForm(false);
   };
 
-  const handleDeleteRoadmapClick = (index) => {
-    const newRoadmaps = [...roadmaps];
-    newRoadmaps.splice(index, 1);
+  const handleDeleteRoadmapClick = (id) => {
+    const newRoadmaps = roadmaps.filter((roadmap) => roadmap.id !== id);
     setRoadmaps(newRoadmaps);
   };
 
@@ -33,18 +34,12 @@ export default function Roadmaps() {
 
   return (
     <RoadmapsContainer>
-      {roadmaps.map((roadmap, index) => (
-        <RoadmapCard key={uid()} color={roadmap.color}>
-          <StyledDeleteButton onClick={() => handleDeleteRoadmapClick(index)}>
-            X
-          </StyledDeleteButton>
-          <h2>{roadmap.title}</h2>
-          <StyledList>
-            {roadmap.topics.map((topic, index) => (
-              <StyledTopic key={index}>{topic}</StyledTopic>
-            ))}
-          </StyledList>
-        </RoadmapCard>
+      {roadmaps.map((roadmap) => (
+        <RoadmapCard
+          key={roadmap.id}
+          roadmap={roadmap}
+          onDeleteRoadmapClick={handleDeleteRoadmapClick}
+        />
       ))}
       <StyledNav>
         <StyledAddButton onClick={handleAddRoadmapClick}>
@@ -87,49 +82,11 @@ const PopupContent = styled.div`
   border-radius: 20px;
 `;
 
-const RoadmapCard = styled.div` 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: 10px;
-  border: 2px solid black;
-  width: 80%;
-  border-radius: 20px;
-  background-color: ${(props) => props.color};'
-`;
-
 const RoadmapsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledTopic = styled.li`
-  padding: 15px 10px;
-  margin: 5px;
-  text-align: left;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  padding: 5px;
-`;
-
-const StyledList = styled.ol`
-  width: 90%;
-  display: flex;
-  align-items: left;
-  flex-direction: column;
-  list-style-position: inside;
-  padding-left: 0;
-`;
-
-const StyledDeleteButton = styled.button`
-  align-self: flex-end;
-  background-color: transparent;
-  border: none;
-  font-size: 1.5rem;
 `;
 
 const StyledAddButton = styled.button`
