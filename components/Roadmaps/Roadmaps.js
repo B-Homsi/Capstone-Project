@@ -4,9 +4,47 @@ import styled from "styled-components";
 import { uid } from "uid";
 import RoadmapCard from "./RoadmapCard";
 
+const exampleRoadmaps = [
+  {
+    id: uid(),
+    title: "JavaScript Basics",
+    color: "#fab005",
+    topics: [
+      { id: uid(), title: "Variables" },
+      { id: uid(), title: "Operators" },
+      { id: uid(), title: "Functions" },
+      { id: uid(), title: "Arrays" },
+      { id: uid(), title: "Objects" },
+    ],
+  },
+  {
+    id: uid(),
+    title: "Backend",
+    color: "#228be6",
+    topics: [
+      { id: uid(), title: "Node.js" },
+      { id: uid(), title: "Express" },
+      { id: uid(), title: "MongoDB" },
+    ],
+  },
+  {
+    id: uid(),
+    title: "Mathematics",
+    color: "#e64980",
+    topics: [
+      { id: uid(), title: "Precalculus" },
+      { id: uid(), title: "Calculus" },
+      { id: uid(), title: "Linear Algebra" },
+      { id: uid(), title: "Differential Equations" },
+      { id: uid(), title: "Partial Differential Equations" },
+    ],
+  },
+];
+
 export default function Roadmaps() {
-  const [roadmaps, setRoadmaps] = useState([]);
+  const [roadmaps, setRoadmaps] = useState([...exampleRoadmaps]);
   const [showForm, setShowForm] = useState(false);
+  const [editRoadmap, setEditRoadmap] = useState(null);
 
   const handleAddRoadmap = (roadmap) => {
     const newRoadmap = { ...roadmap, id: uid() };
@@ -20,6 +58,7 @@ export default function Roadmaps() {
 
   const handleCancel = () => {
     setShowForm(false);
+    setEditRoadmap(null);
   };
 
   const handleDeleteRoadmapClick = (id) => {
@@ -32,6 +71,20 @@ export default function Roadmaps() {
     event.stopPropagation();
   };
 
+  const handleEditRoadmapClick = (roadmap) => {
+    setShowForm(true);
+    setEditRoadmap(roadmap);
+  };
+
+  const handleEditRoadmap = (editedRoadmap) => {
+    const newRoadmaps = roadmaps.map((roadmap) =>
+      roadmap.id === editedRoadmap.id ? editedRoadmap : roadmap
+    );
+    setRoadmaps(newRoadmaps);
+    setShowForm(false);
+    setEditRoadmap(null);
+  };
+
   return (
     <RoadmapsContainer>
       {roadmaps.map((roadmap) => (
@@ -39,22 +92,23 @@ export default function Roadmaps() {
           key={roadmap.id}
           roadmap={roadmap}
           onDeleteRoadmapClick={handleDeleteRoadmapClick}
+          onEditRoadmapClick={handleEditRoadmapClick}
         />
       ))}
-      <StyledNav>
-        <StyledAddButton onClick={handleAddRoadmapClick}>
-          Add Roadmap
-        </StyledAddButton>
-      </StyledNav>
+
+      <StyledAddButton onClick={handleAddRoadmapClick}>
+        Add Roadmap
+      </StyledAddButton>
 
       {showForm && (
         <PopupOverlay onClick={handleCancel}>
-          <PopupContent onClick={handlePopupContentClick}>
-            <RoadmapForm
-              onAddRoadmap={handleAddRoadmap}
-              onCancel={handleCancel}
-            />
-          </PopupContent>
+          <RoadmapForm
+            onPopupContentClick={handlePopupContentClick}
+            onAddRoadmap={handleAddRoadmap}
+            onEditRoadmap={handleEditRoadmap}
+            onCancel={handleCancel}
+            editRoadmap={editRoadmap}
+          />
         </PopupOverlay>
       )}
     </RoadmapsContainer>
@@ -67,19 +121,10 @@ const PopupOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const PopupContent = styled.div`
-  background: #f5f5f5;
-  padding: 20px;
-  overflow: scroll;
-  max-height: 80%;
-  max-width: 80%;
-  border-radius: 20px;
 `;
 
 const RoadmapsContainer = styled.div`
@@ -94,13 +139,3 @@ const StyledAddButton = styled.button`
   font-size: 1.5rem;
 `;
 
-const StyledNav = styled.nav`
-  display: flex;
-  position: fixed;
-  bottom: 0px;
-  height: 50px;
-  justify-content: center;
-  background-color: #f5f5f5;
-  width: 100%;
-  z-index: 1;
-`;

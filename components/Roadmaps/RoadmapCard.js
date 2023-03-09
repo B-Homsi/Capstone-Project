@@ -1,11 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function RoadmapCard({ roadmap, onDeleteRoadmapClick }) {
+export default function RoadmapCard({
+  roadmap,
+  onDeleteRoadmapClick,
+  onEditRoadmapClick,
+}) {
   const [showDetails, setShowDetails] = useState(false);
 
   const handleToggleDetailsClick = () => {
     setShowDetails(!showDetails);
+  };
+
+  const handleEditRoadmapClick = () => {
+    onEditRoadmapClick(roadmap);
   };
 
   return (
@@ -16,6 +24,7 @@ export default function RoadmapCard({ roadmap, onDeleteRoadmapClick }) {
       <button onClick={handleToggleDetailsClick}>
         {showDetails ? "Hide Details" : "Show Details"}
       </button>
+      <button onClick={handleEditRoadmapClick}>Edit</button>
       <h2>{roadmap.title}</h2>
       {showDetails && (
         <StyledList>
