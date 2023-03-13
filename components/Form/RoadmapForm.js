@@ -9,9 +9,8 @@ export default function RoadmapForm({
   editRoadmap,
   onPopupContentClick,
 }) {
-
   const [title, setTitle] = useState(editRoadmap ? editRoadmap.title : "");
-  
+
   const [topics, setTopics] = useState(
     editRoadmap
       ? editRoadmap.topics
