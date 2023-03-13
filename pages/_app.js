@@ -1,7 +1,7 @@
 import GlobalStyle from "@/styles";
 import Head from "next/head";
 import { uid } from "uid";
-import { useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
 
 const exampleRoadmaps = [
   {
@@ -51,7 +51,9 @@ const exampleRoadmaps = [
 ];
 
 export default function App({ Component, pageProps }) {
-  const [roadmaps, setRoadmaps] = useState([...exampleRoadmaps]);
+  const [roadmaps, setRoadmaps] = useLocalStorageState("roadmaps", {
+    defaultValue: [...exampleRoadmaps],
+  });
 
   return (
     <>

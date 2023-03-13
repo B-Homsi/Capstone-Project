@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
-import CardForm from "../../components/Form/CardForm";
+import CardForm from "@/components/Form/CardForm";
 
 export default function Topics({ roadmaps, setRoadmaps }) {
   const router = useRouter();
@@ -10,6 +10,10 @@ export default function Topics({ roadmaps, setRoadmaps }) {
   const [showForm, setShowForm] = useState(false);
 
   const roadmap = roadmaps.find((r) => r.id === id);
+
+  if (!id || !roadmap) {
+    return <div>Loading...</div>;
+  }
 
   const handleAddCard = (card) => {
     const newCard = { ...card, id: uid() };
