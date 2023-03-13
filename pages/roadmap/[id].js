@@ -44,7 +44,6 @@ export default function Topics({ roadmaps, setRoadmaps }) {
 
   const handleCancel = () => {
     setShowForm(false);
-    setEditRoadmap(null);
   };
 
   // Prevents the popup from closing when clicking inside the form
