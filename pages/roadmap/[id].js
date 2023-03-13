@@ -58,7 +58,7 @@ export default function Topics({ roadmaps, setRoadmaps }) {
       <TopicsContainer>
         {roadmap.topics.map((topic) => (
           <Topic color={roadmap.color} key={topic.id}>
-            {topic.title}
+            {topic?.title}
             <br />
             Cards: {topic.cards?.length || 0}
           </Topic>
