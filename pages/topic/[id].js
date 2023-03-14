@@ -10,10 +10,10 @@ export default function Topic({ roadmaps, setRoadmaps }) {
   const { id } = router.query;
   const [showForm, setShowForm] = useState(false);
 
-  const roadmap = roadmaps.find((r) => r.topics.some((t) => t.id === id));
-  const topic = roadmap.topics.find((t) => t.id === id);
+  const roadmap = roadmaps?.find((r) => r.topics.some((t) => t.id === id));
+  const topic = roadmap?.topics.find((t) => t.id === id);
 
-  if (!id || !topic) {
+  if (!id || !roadmap || !roadmap.topics) {
     return <div>Loading...</div>;
   }
 
