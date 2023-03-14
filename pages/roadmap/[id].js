@@ -3,6 +3,7 @@ import { useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
 import CardForm from "@/components/Form/CardForm";
+import Link from "next/link";
 
 export default function Topics({ roadmaps, setRoadmaps }) {
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function Topics({ roadmaps, setRoadmaps }) {
       <TopicsContainer>
         {roadmap.topics.map((topic) => (
           <Topic color={roadmap.color} key={topic.id}>
-            {topic?.title}
+            <Link href={`/topic/${topic.id}`}>{topic?.title}</Link>
             <br />
             Cards: {topic.cards?.length || 0}
           </Topic>
