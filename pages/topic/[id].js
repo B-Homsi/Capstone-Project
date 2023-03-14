@@ -1,19 +1,61 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { uid } from "uid";
 import styled from "styled-components";
 import Card from "@/components/FlashCards/Card";
+import CardForm from "@/components/Form/CardForm";
 
-export default function Topic({ roadmaps }) {
+export default function Topic({ roadmaps, setRoadmaps }) {
   const router = useRouter();
   const { id } = router.query;
+  const [showForm, setShowForm] = useState(false);
 
   const roadmap = roadmaps.find((r) => r.topics.some((t) => t.id === id));
   const topic = roadmap.topics.find((t) => t.id === id);
-  console.log(topic);
 
   if (!id || !topic) {
     return <div>Loading...</div>;
   }
+
+  const handleAddCard = (card) => {
+    const newCard = { ...card, id: uid() };
+
+    const updatedTopics = roadmap.topics.map((topic) => {
+      if (topic.title === card.selectedTopic) {
+        return {
+          ...topic,
+          cards: [...(topic.cards || []), newCard],
+        };
+      }
+      return topic;
+    });
+
+    const updatedRoadmaps = roadmaps.map((r) => {
+      if (r.id === roadmap.id) {
+        return {
+          ...r,
+          topics: updatedTopics,
+        };
+      }
+      return r;
+    });
+
+    setRoadmaps(updatedRoadmaps);
+    setShowForm(false);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+  };
+
+  // Prevents the popup from closing when clicking inside the form
+  const handlePopupContentClick = (event) => {
+    event.stopPropagation();
+  };
+
+  const handleAddCardClick = () => {
+    setShowForm(true);
+  };
 
   return (
     <>
@@ -22,6 +64,21 @@ export default function Topic({ roadmaps }) {
         {topic.cards?.map((card) => (
           <Card key={card.id} card={card} color={roadmap.color} />
         ))}
+
+        <StyledAddButton onClick={handleAddCardClick}>Add Card</StyledAddButton>
+
+        {showForm && (
+          <PopupOverlay onClick={handleCancel}>
+            <CardForm
+              onAddCard={handleAddCard}
+              onCancel={handleCancel}
+              onPopupContentClick={handlePopupContentClick}
+              topics={roadmap.topics}
+              color={roadmap.color}
+              insideTopic={topic.title}
+            />
+          </PopupOverlay>
+        )}
       </CardsContainer>
     </>
   );
@@ -37,4 +94,21 @@ const CardsContainer = styled.ul`
   align-items: center;
   justify-content: center;
   padding-left: 0;
+`;
+
+const StyledAddButton = styled.button`
+  background-color: transparent;
+  font-size: 1.5rem;
+`;
+
+const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
