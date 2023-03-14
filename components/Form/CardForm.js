@@ -28,11 +28,16 @@ export default function CardForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (question.trim() === "" || answer.trim() === "") {
-      setQuestionError(question.trim() === "");
-      setAnswerError(answer.trim() === "");
+
+    if (question.trim() === "") {
+      setQuestionError(true);
       return;
     }
+    if (answer.trim() === "") {
+      setAnswerError(true);
+      return;
+    }
+
     onAddCard({ selectedTopic, question, answer });
   };
 
@@ -52,8 +57,6 @@ export default function CardForm({
             </option>
           ))}
         </select>
-        <br />
-        <br />
 
         <label htmlFor="question">Question</label>
         {questionError && (
@@ -82,8 +85,6 @@ export default function CardForm({
           onChange={(event) => handleAnswerChange(event)}
           required
         ></textarea>
-        <br />
-        <br />
 
         <button type="submit">Add</button>
         <button type="button" onClick={onCancel}>

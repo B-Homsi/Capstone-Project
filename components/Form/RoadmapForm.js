@@ -95,7 +95,7 @@ export default function RoadmapForm({
           required
         />
         <span>{`${title.length}/22`}</span>
-        <br />
+  
         {errors.title && <ErrorMessage>{errors.title}</ErrorMessage>}
 
         <Styledul>
@@ -125,7 +125,6 @@ export default function RoadmapForm({
         <button type="button" onClick={handleAddTopic}>
           +
         </button>
-        <br />
 
         <label htmlFor="color">Color</label>
         <input
