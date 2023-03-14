@@ -11,6 +11,8 @@ export default function CardForm({
   const [selectedTopic, setSelectedTopic] = useState("");
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [questionError, setQuestionError] = useState(false);
+  const [answerError, setAnswerError] = useState(false);
 
   const handleTopicChange = (event) => {
     const value = event.target.value;
@@ -29,18 +31,22 @@ export default function CardForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (question.trim() === "" || answer.trim() === "") {
+      setQuestionError(question.trim() === "");
+      setAnswerError(answer.trim() === "");
+      return;
+    }
     onAddCard({ selectedTopic, question, answer });
   };
 
   return (
     <PopupContent onClick={onPopupContentClick} color={color}>
       <form onSubmit={handleSubmit}>
-        
         <h2>{"Add new Card"}</h2>
 
         <label htmlFor="topic">Topic</label>
-        <select name="topic" id="topic" onChange={handleTopicChange}>
-          <option value="default" disabled selected hidden>
+        <select name="topic" id="topic" onChange={handleTopicChange} required>
+          <option value="" selected disabled hidden>
             Please select a Topic
           </option>
           {topics.map((topic) => (
@@ -53,6 +59,9 @@ export default function CardForm({
         <br />
 
         <label htmlFor="question">Question</label>
+        {questionError && (
+          <StyledError>Please enter a valid question!</StyledError>
+        )}
         <textarea
           name="question"
           rows="6"
@@ -65,6 +74,7 @@ export default function CardForm({
         ></textarea>
 
         <label htmlFor="answer">Answer</label>
+        {answerError && <StyledError>Please enter a valid answer!</StyledError>}
         <textarea
           name="answer"
           rows="6"
@@ -94,4 +104,9 @@ const PopupContent = styled.div`
   max-height: 80%;
   max-width: 80%;
   border-radius: 20px;
+`;
+
+const StyledError = styled.p`
+  color: red;
+  background-color: white;
 `;
