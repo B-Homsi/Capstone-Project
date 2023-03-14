@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Link from "next/link";
 
 export default function RoadmapCard({
   roadmap,
@@ -25,7 +26,9 @@ export default function RoadmapCard({
         {showDetails ? "Hide Details" : "Show Details"}
       </button>
       <button onClick={handleEditRoadmapClick}>Edit</button>
-      <h2>{roadmap.title}</h2>
+      <Link href={`/roadmap/${roadmap.id}`}>
+        <h2>{roadmap.title}</h2>
+      </Link>
       {showDetails && (
         <StyledList>
           {roadmap.topics.map((topic) => (
