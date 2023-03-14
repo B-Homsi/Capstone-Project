@@ -15,18 +15,15 @@ export default function CardForm({
   const [answerError, setAnswerError] = useState(false);
 
   const handleTopicChange = (event) => {
-    const value = event.target.value;
-    setSelectedTopic(value);
+    setSelectedTopic(event.target.value);
   };
 
   const handleQuestionChange = (event) => {
-    const value = event.target.value;
-    setQuestion(value);
+    setQuestion(event.target.value);
   };
 
   const handleAnswerChange = (event) => {
-    const value = event.target.value;
-    setAnswer(value);
+    setAnswer(event.target.value);
   };
 
   const handleSubmit = (event) => {

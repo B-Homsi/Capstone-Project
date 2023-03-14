@@ -28,8 +28,7 @@ export default function RoadmapForm({
   const [errors, setErrors] = useState({});
 
   const handleTitleChange = (event) => {
-    const value = event.target.value.slice(0, 22);
-    setTitle(value);
+    setTitle(event.target.value.slice(0, 22));
   };
 
   const handleTopicChange = (id, event) => {
