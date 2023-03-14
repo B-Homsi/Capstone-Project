@@ -1,10 +1,48 @@
 import { useState } from "react";
-import { uid } from "uid";
-import styled from "styled-components";
 import RoadmapForm from "../Form/RoadmapForm";
+import styled from "styled-components";
+import { uid } from "uid";
 import RoadmapCard from "./RoadmapCard";
 
-export default function Roadmaps({ roadmaps, setRoadmaps }) {
+const exampleRoadmaps = [
+  {
+    id: uid(),
+    title: "JavaScript Basics",
+    color: "#fab005",
+    topics: [
+      { id: uid(), title: "Variables" },
+      { id: uid(), title: "Operators" },
+      { id: uid(), title: "Functions" },
+      { id: uid(), title: "Arrays" },
+      { id: uid(), title: "Objects" },
+    ],
+  },
+  {
+    id: uid(),
+    title: "Backend",
+    color: "#228be6",
+    topics: [
+      { id: uid(), title: "Node.js" },
+      { id: uid(), title: "Express" },
+      { id: uid(), title: "MongoDB" },
+    ],
+  },
+  {
+    id: uid(),
+    title: "Mathematics",
+    color: "#e64980",
+    topics: [
+      { id: uid(), title: "Precalculus" },
+      { id: uid(), title: "Calculus" },
+      { id: uid(), title: "Linear Algebra" },
+      { id: uid(), title: "Differential Equations" },
+      { id: uid(), title: "Partial Differential Equations" },
+    ],
+  },
+];
+
+export default function Roadmaps() {
+  const [roadmaps, setRoadmaps] = useState([...exampleRoadmaps]);
   const [showForm, setShowForm] = useState(false);
   const [editRoadmap, setEditRoadmap] = useState(null);
 
@@ -100,3 +138,4 @@ const StyledAddButton = styled.button`
   background-color: transparent;
   font-size: 1.5rem;
 `;
+
