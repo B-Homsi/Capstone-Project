@@ -7,8 +7,11 @@ export default function CardForm({
   onPopupContentClick,
   topics,
   color,
+  insideTopic,
 }) {
-  const [selectedTopic, setSelectedTopic] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState(
+    insideTopic ? insideTopic : ""
+  );
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [questionError, setQuestionError] = useState(false);
@@ -47,10 +50,18 @@ export default function CardForm({
         <h2>{"Add new Card"}</h2>
 
         <label htmlFor="topic">Topic</label>
-        <select name="topic" id="topic" onChange={handleTopicChange} required>
-          <option value="" selected disabled hidden>
-            Please select a Topic
-          </option>
+        <select
+          name="topic"
+          id="topic"
+          onChange={handleTopicChange}
+          value={selectedTopic}
+          required
+        >
+          {!insideTopic && (
+            <option value="" disabled hidden>
+              Please select a Topic
+            </option>
+          )}
           {topics.map((topic) => (
             <option key={topic.id} value={topic.title}>
               {topic.title}

@@ -2,17 +2,18 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
+import Card from "@/components/FlashCards/Card";
 import CardForm from "@/components/Form/CardForm";
-import Link from "next/link";
 
-export default function Topics({ roadmaps, setRoadmaps }) {
+export default function Topic({ roadmaps, setRoadmaps }) {
   const router = useRouter();
   const { id } = router.query;
   const [showForm, setShowForm] = useState(false);
 
-  const roadmap = roadmaps.find((r) => r.id === id);
+  const roadmap = roadmaps?.find((r) => r.topics.some((t) => t.id === id));
+  const topic = roadmap?.topics.find((t) => t.id === id);
 
-  if (!id || !roadmap) {
+  if (!id || !roadmap || !roadmap.topics) {
     return <div>Loading...</div>;
   }
 
@@ -56,17 +57,39 @@ export default function Topics({ roadmaps, setRoadmaps }) {
     setShowForm(true);
   };
 
+  const handleDeleteCard = (id) => {
+    const updatedRoadmaps = roadmaps.map((r) => {
+      const updatedTopics = r.topics.map((topic) => {
+        const shouldRemoveCard = topic.cards?.some((card) => card.id === id);
+
+        if (shouldRemoveCard) {
+          return {
+            ...topic,
+            cards: topic.cards.filter((card) => card.id !== id),
+          };
+        }
+        return topic;
+      });
+
+      return { ...r, topics: updatedTopics };
+    });
+
+    setRoadmaps(updatedRoadmaps);
+  };
+
   return (
     <>
-      <Header>{roadmap.title}</Header>
-      <TopicsContainer>
-        {roadmap.topics.map((topic) => (
-          <Topic color={roadmap.color} key={topic.id}>
-            <Link href={`/topic/${topic.id}`}>{topic?.title}</Link>
-            <br />
-            Cards: {topic.cards?.length || 0}
-          </Topic>
+      <Header>{topic.title}</Header>
+      <CardsContainer>
+        {topic.cards?.map((card) => (
+          <Card
+            key={card.id}
+            card={card}
+            color={roadmap.color}
+            onDeleteCard={handleDeleteCard}
+          />
         ))}
+
         <StyledAddButton onClick={handleAddCardClick}>Add Card</StyledAddButton>
 
         {showForm && (
@@ -77,10 +100,11 @@ export default function Topics({ roadmaps, setRoadmaps }) {
               onPopupContentClick={handlePopupContentClick}
               topics={roadmap.topics}
               color={roadmap.color}
+              insideTopic={topic.title}
             />
           </PopupOverlay>
         )}
-      </TopicsContainer>
+      </CardsContainer>
     </>
   );
 }
@@ -89,19 +113,7 @@ const Header = styled.h1`
   text-align: center;
 `;
 
-const Topic = styled.li` 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: 10px;
-  border: 2px solid black;
-  width: 80%;
-  border-radius: 20px;
-  background-color: ${(props) => props.color};'
-`;
-
-const TopicsContainer = styled.ul`
+const CardsContainer = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
