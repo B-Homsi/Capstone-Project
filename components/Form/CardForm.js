@@ -50,10 +50,18 @@ export default function CardForm({
         <h2>{"Add new Card"}</h2>
 
         <label htmlFor="topic">Topic</label>
-        <select name="topic" id="topic" onChange={handleTopicChange} required>
-          <option value="" selected disabled hidden>
-            {insideTopic ? insideTopic : "Please select a Topic"}
-          </option>
+        <select
+          name="topic"
+          id="topic"
+          onChange={handleTopicChange}
+          value={selectedTopic}
+          required
+        >
+          {!insideTopic && (
+            <option value="" disabled hidden>
+              Please select a Topic
+            </option>
+          )}
           {topics.map((topic) => (
             <option key={topic.id} value={topic.title}>
               {topic.title}
