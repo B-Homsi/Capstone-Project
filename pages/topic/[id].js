@@ -57,12 +57,37 @@ export default function Topic({ roadmaps, setRoadmaps }) {
     setShowForm(true);
   };
 
+  const handleDeleteCard = (id) => {
+    const updatedRoadmaps = roadmaps.map((r) => {
+      const updatedTopics = r.topics.map((topic) => {
+        const shouldRemoveCard = topic.cards?.some((card) => card.id === id);
+
+        if (shouldRemoveCard) {
+          return {
+            ...topic,
+            cards: topic.cards.filter((card) => card.id !== id),
+          };
+        }
+        return topic;
+      });
+
+      return { ...r, topics: updatedTopics };
+    });
+
+    setRoadmaps(updatedRoadmaps);
+  };
+
   return (
     <>
       <Header>{topic.title}</Header>
       <CardsContainer>
         {topic.cards?.map((card) => (
-          <Card key={card.id} card={card} color={roadmap.color} />
+          <Card
+            key={card.id}
+            card={card}
+            color={roadmap.color}
+            onDeleteCard={handleDeleteCard}
+          />
         ))}
 
         <StyledAddButton onClick={handleAddCardClick}>Add Card</StyledAddButton>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function Card({ card, color }) {
+export default function Card({ card, color, onDeleteCard }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleToggleAnswerClick = () => {
@@ -10,6 +10,9 @@ export default function Card({ card, color }) {
 
   return (
     <StyledCard color={color}>
+      <StyledDeleteButton onClick={() => onDeleteCard(card.id)}>
+        X
+      </StyledDeleteButton>
       <p>{card.question}</p>
       <StyledToggleButton onClick={handleToggleAnswerClick}>
         {showAnswer ? "Hide Answer" : "Show Answer"}
@@ -18,6 +21,13 @@ export default function Card({ card, color }) {
     </StyledCard>
   );
 }
+
+const StyledDeleteButton = styled.button`
+  align-self: flex-end;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+`;
 
 const StyledToggleButton = styled.button`
   background-color: #f5f5f5;
