@@ -71,6 +71,7 @@ export default function Subjects({ subjects, setSubjects }) {
           subject={subject}
           onDeleteSubject={handleDeleteSubject}
           onDeleteSubjectClick={handleDeleteSubjectClick}
+          onEditSubjectClick={handleEditSubjectClick}
           openedPopup={openedPopup}
           setOpenedPopup={setOpenedPopup}
           setSubjectToDelete={setSubjectToDelete}

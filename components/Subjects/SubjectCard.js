@@ -53,9 +53,11 @@ export default function SubjectCard({
       {showDetails && (
         <StyledList>
           {subject.topics.map((topic) => (
-            <Link key={topic.id} href={`/topic/${topic.id}`}>
-              <StyledTopic>{topic?.title}</StyledTopic>
-            </Link>
+            <StyledLink key={topic.id} href={`/topic/${topic.id}`}>
+              <StyledTopic>
+                {topic?.title} <p>Cards: {topic.cards?.length || 0}</p>
+              </StyledTopic>
+            </StyledLink>
           ))}
         </StyledList>
       )}
@@ -83,7 +85,7 @@ const CardContainer = styled.div`
 const StyledTopic = styled.li`
   padding: 15px 10px;
   margin: 5px;
-  text-align: left;
+  text-align: center;
   border: 1px solid black;
   border-radius: 5px;
   background-color: #f5f5f5;
@@ -102,3 +104,6 @@ const StyledList = styled.ol`
 const StyledOptionButton = styled.button`
 
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;`;
