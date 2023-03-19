@@ -8,6 +8,7 @@ export default function Subjects({ subjects, setSubjects }) {
   const [showForm, setShowForm] = useState(false);
   const [editSubject, setEditSubject] = useState(null);
   const [openedPopup, setOpenedPopup] = useState(null);
+  const [subjectToDelete, setSubjectToDelete] = useState(null);
 
   const handleAddSubject = (subject) => {
     const newSubject = { ...subject, id: uid() };
@@ -22,12 +23,20 @@ export default function Subjects({ subjects, setSubjects }) {
   const handleCancel = () => {
     setShowForm(false);
     setEditSubject(null);
+    setSubjectToDelete(null);
   };
 
   const handleDeleteSubjectClick = (id) => {
     setOpenedPopup(null);
+    setSubjectToDelete((prevSubjectoDelete) =>
+      prevSubjectoDelete === id ? null : id
+    );
+  };
+
+  const handleDeleteSubject = (id) => {
     const newSubjects = subjects.filter((subject) => subject.id !== id);
     setSubjects(newSubjects);
+    setSubjectToDelete(null);
   };
 
   // Prevents the popup from closing when clicking inside the form
@@ -60,10 +69,11 @@ export default function Subjects({ subjects, setSubjects }) {
         <SubjectCard
           key={subject.id}
           subject={subject}
+          onDeleteSubject={handleDeleteSubject}
           onDeleteSubjectClick={handleDeleteSubjectClick}
-          onEditSubjectClick={handleEditSubjectClick}
           openedPopup={openedPopup}
           setOpenedPopup={setOpenedPopup}
+          setSubjectToDelete={setSubjectToDelete}
         />
       ))}
 
@@ -82,9 +92,31 @@ export default function Subjects({ subjects, setSubjects }) {
           />
         </PopupOverlay>
       )}
+
+      {subjectToDelete && (
+        <PopupOverlay onClick={handleCancel}>
+          <DeleteConfirmation>
+            <p>Are you sure?</p>
+            <button onClick={() => handleDeleteSubject(subjectToDelete)}>
+              Confirm
+            </button>
+            <button onClick={() => setSubjectToDelete(null)}>Cancel</button>
+          </DeleteConfirmation>
+        </PopupOverlay>
+      )}
     </SubjectsContainer>
   );
 }
+
+const DeleteConfirmation = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  `;
 
 const PopupOverlay = styled.div`
   position: fixed;

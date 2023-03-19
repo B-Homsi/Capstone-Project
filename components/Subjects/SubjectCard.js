@@ -11,7 +11,6 @@ export default function SubjectCard({
   setOpenedPopup,
 }) {
   const [showDetails, setShowDetails] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
 
   const handleToggleDetailsClick = () => {
     if (openedPopup) return;
