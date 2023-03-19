@@ -7,6 +7,7 @@ import SubjectCard from "./SubjectCard";
 export default function Subjects({ subjects, setSubjects }) {
   const [showForm, setShowForm] = useState(false);
   const [editSubject, setEditSubject] = useState(null);
+  const [openedPopup, setOpenedPopup] = useState(null);
 
   const handleAddSubject = (subject) => {
     const newSubject = { ...subject, id: uid() };
@@ -24,6 +25,7 @@ export default function Subjects({ subjects, setSubjects }) {
   };
 
   const handleDeleteSubjectClick = (id) => {
+    setOpenedPopup(null);
     const newSubjects = subjects.filter((subject) => subject.id !== id);
     setSubjects(newSubjects);
   };
@@ -34,6 +36,7 @@ export default function Subjects({ subjects, setSubjects }) {
   };
 
   const handleEditSubjectClick = (subject) => {
+    setOpenedPopup(null);
     setShowForm(true);
     setEditSubject(subject);
   };
@@ -47,14 +50,20 @@ export default function Subjects({ subjects, setSubjects }) {
     setEditSubject(null);
   };
 
+  const handleOutsideClick = () => {
+    setOpenedPopup(null);
+  };
+
   return (
-    <SubjectsContainer>
+    <SubjectsContainer onClick={handleOutsideClick}>
       {subjects.map((subject) => (
         <SubjectCard
           key={subject.id}
           subject={subject}
           onDeleteSubjectClick={handleDeleteSubjectClick}
           onEditSubjectClick={handleEditSubjectClick}
+          openedPopup={openedPopup}
+          setOpenedPopup={setOpenedPopup}
         />
       ))}
 
@@ -91,6 +100,7 @@ const PopupOverlay = styled.div`
 
 const SubjectsContainer = styled.div`
   display: flex;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;

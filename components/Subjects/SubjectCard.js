@@ -1,34 +1,62 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import Popup from "./Popup";
 
-export default function SubjectCard({ subject, onDeleteSubjectClick, onEditSubjectClick }) {
+export default function SubjectCard({
+  subject,
+  onDeleteSubjectClick,
+  onEditSubjectClick,
+  openedPopup,
+  setOpenedPopup,
+}) {
   const [showDetails, setShowDetails] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleToggleDetailsClick = () => {
+    if (openedPopup) return;
     setShowDetails(!showDetails);
   };
 
-  const handleEditSubjectClick = () => {
+  const handleEditSubjectClick = (event) => {
+    event.stopPropagation();
     onEditSubjectClick(subject);
   };
 
+  const handleDeleteSubjectClick = (event) => {
+    event.stopPropagation();
+    onDeleteSubjectClick(subject.id);
+  };
+
+  const handleTogglePopup = (event) => {
+    event.stopPropagation();
+    setOpenedPopup((prevOpenedPopup) =>
+      prevOpenedPopup === subject.id ? null : subject.id
+    );
+  };
+
   return (
-    <CardContainer color={subject.color}>
-      <StyledDeleteButton onClick={() => onDeleteSubjectClick(subject.id)}>
-        X
-      </StyledDeleteButton>
-      <button onClick={handleToggleDetailsClick}>
-        {showDetails ? "Hide Details" : "Show Details"}
-      </button>
-      <button onClick={handleEditSubjectClick}>Edit</button>
-      <Link href={`/subject/${subject.id}`}>
-        <h2>{subject.title}</h2>
-      </Link>
+    <CardContainer color={subject.color} onClick={handleToggleDetailsClick}>
+      <OptionsWrapper>
+        <StyledOptionButton onClick={handleTogglePopup}>
+          Options
+        </StyledOptionButton>
+        {openedPopup === subject.id && (
+          <Popup
+            onEdit={handleEditSubjectClick}
+            onDelete={handleDeleteSubjectClick}
+          />
+        )}
+      </OptionsWrapper>
+
+      <h2>{subject.title}</h2>
+
       {showDetails && (
         <StyledList>
           {subject.topics.map((topic) => (
-            <StyledTopic key={topic.id}>{topic.title}</StyledTopic>
+            <Link key={topic.id} href={`/topic/${topic.id}`}>
+              <StyledTopic>{topic?.title}</StyledTopic>
+            </Link>
           ))}
         </StyledList>
       )}
@@ -36,11 +64,9 @@ export default function SubjectCard({ subject, onDeleteSubjectClick, onEditSubje
   );
 }
 
-const StyledDeleteButton = styled.button`
+const OptionsWrapper = styled.div`
+  position: relative;
   align-self: flex-end;
-  background-color: transparent;
-  border: none;
-  font-size: 1.5rem;
 `;
 
 const CardContainer = styled.div` 
@@ -72,4 +98,8 @@ const StyledList = styled.ol`
   flex-direction: column;
   list-style-position: inside;
   padding-left: 0;
+`;
+
+const StyledOptionButton = styled.button`
+
 `;
