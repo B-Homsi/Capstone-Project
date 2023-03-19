@@ -47,6 +47,11 @@ export default function CardForm({
   return (
     <PopupContent onClick={onPopupContentClick} color={color}>
       <form onSubmit={handleSubmit}>
+        <button type="button" onClick={onCancel}>
+          X
+        </button>
+        <button type="submit">Add</button>
+        
         <h2>{"Add new Card"}</h2>
 
         <label htmlFor="topic">Topic</label>
@@ -96,11 +101,6 @@ export default function CardForm({
           onChange={(event) => handleAnswerChange(event)}
           required
         ></textarea>
-
-        <button type="submit">Add</button>
-        <button type="button" onClick={onCancel}>
-          X
-        </button>
       </form>
     </PopupContent>
   );

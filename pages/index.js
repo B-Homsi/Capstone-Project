@@ -1,8 +1,8 @@
-import Roadmaps from "../components/Roadmaps/Roadmaps";
-export default function Home({ roadmaps, setRoadmaps }) {
+import Subjects from "../components/Subjects/Subjects";
+export default function Home({ subjects, setSubjects }) {
   return (
     <main>
-      <Roadmaps roadmaps={roadmaps} setRoadmaps={setRoadmaps} />
+      <Subjects subjects={subjects} setSubjects={setSubjects} />
     </main>
   );
 }

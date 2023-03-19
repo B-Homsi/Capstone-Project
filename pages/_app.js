@@ -3,7 +3,7 @@ import Head from "next/head";
 import { uid } from "uid";
 import useLocalStorageState from "use-local-storage-state";
 
-const exampleRoadmaps = [
+const exampleSubjects = [
   {
     id: uid(),
     title: "JavaScript Basics",
@@ -51,8 +51,8 @@ const exampleRoadmaps = [
 ];
 
 export default function App({ Component, pageProps }) {
-  const [roadmaps, setRoadmaps] = useLocalStorageState("roadmaps", {
-    defaultValue: [...exampleRoadmaps],
+  const [subjects, setSubjects] = useLocalStorageState("roadmaps", {
+    defaultValue: [...exampleSubjects],
   });
 
   return (
@@ -61,7 +61,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Capstone Project</title>
       </Head>
-      <Component {...pageProps} roadmaps={roadmaps} setRoadmaps={setRoadmaps} />
+      <Component {...pageProps} subjects={subjects} setSubjects={setSubjects} />
     </>
   );
 }

@@ -2,18 +2,18 @@ import { useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
 
-export default function RoadmapForm({
-  onAddRoadmap,
-  onEditRoadmap,
+export default function SubjectForm({
+  onAddSubject,
+  onEditSubject,
   onCancel,
-  editRoadmap,
+  editSubject,
   onPopupContentClick,
 }) {
-  const [title, setTitle] = useState(editRoadmap ? editRoadmap.title : "");
+  const [title, setTitle] = useState(editSubject ? editSubject.title : "");
 
   const [topics, setTopics] = useState(
-    editRoadmap
-      ? editRoadmap.topics
+    editSubject
+      ? editSubject.topics
       : [
           { id: uid(), title: "" },
           { id: uid(), title: "" },
@@ -22,7 +22,7 @@ export default function RoadmapForm({
   );
 
   const [color, setColor] = useState(
-    editRoadmap ? editRoadmap.color : "#ffffff"
+    editSubject ? editSubject.color : "#ffffff"
   );
 
   const [errors, setErrors] = useState({});
@@ -71,18 +71,24 @@ export default function RoadmapForm({
 
     setErrors({});
 
-    if (editRoadmap) {
-      const editedRoadmap = { ...editRoadmap, title, topics, color };
-      onEditRoadmap(editedRoadmap);
+    if (editSubject) {
+      const editedSubject = { ...editSubject, title, topics, color };
+      onEditSubject(editedSubject);
     } else {
-      onAddRoadmap({ title, topics, color });
+      onAddSubject({ title, topics, color });
     }
   };
 
   return (
     <PopupContent onClick={onPopupContentClick} color={color}>
       <form onSubmit={handleSubmit}>
-        <h2>{editRoadmap ? "Edit roadmap" : "Create new roadmap"}</h2>
+        <button type="button" onClick={onCancel}>
+          X
+        </button>
+
+        <button type="submit">{editSubject ? "Update" : "Create"}</button>
+
+        <h2>{editSubject ? "Edit Subject" : "Add Subject"}</h2>
 
         <label htmlFor="title">Title: </label>
         <input
@@ -132,11 +138,6 @@ export default function RoadmapForm({
           value={color}
           onChange={handleColorChange}
         />
-
-        <button type="submit">{editRoadmap ? "Update" : "Create"}</button>
-        <button type="button" onClick={onCancel}>
-          X
-        </button>
       </form>
     </PopupContent>
   );

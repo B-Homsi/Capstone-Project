@@ -2,36 +2,32 @@ import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
-export default function RoadmapCard({
-  roadmap,
-  onDeleteRoadmapClick,
-  onEditRoadmapClick,
-}) {
+export default function SubjectCard({ subject, onDeleteSubjectClick, onEditSubjectClick }) {
   const [showDetails, setShowDetails] = useState(false);
 
   const handleToggleDetailsClick = () => {
     setShowDetails(!showDetails);
   };
 
-  const handleEditRoadmapClick = () => {
-    onEditRoadmapClick(roadmap);
+  const handleEditSubjectClick = () => {
+    onEditSubjectClick(subject);
   };
 
   return (
-    <CardContainer color={roadmap.color}>
-      <StyledDeleteButton onClick={() => onDeleteRoadmapClick(roadmap.id)}>
+    <CardContainer color={subject.color}>
+      <StyledDeleteButton onClick={() => onDeleteSubjectClick(subject.id)}>
         X
       </StyledDeleteButton>
       <button onClick={handleToggleDetailsClick}>
         {showDetails ? "Hide Details" : "Show Details"}
       </button>
-      <button onClick={handleEditRoadmapClick}>Edit</button>
-      <Link href={`/roadmap/${roadmap.id}`}>
-        <h2>{roadmap.title}</h2>
+      <button onClick={handleEditSubjectClick}>Edit</button>
+      <Link href={`/subject/${subject.id}`}>
+        <h2>{subject.title}</h2>
       </Link>
       {showDetails && (
         <StyledList>
-          {roadmap.topics.map((topic) => (
+          {subject.topics.map((topic) => (
             <StyledTopic key={topic.id}>{topic.title}</StyledTopic>
           ))}
         </StyledList>

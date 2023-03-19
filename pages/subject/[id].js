@@ -5,21 +5,21 @@ import styled from "styled-components";
 import CardForm from "@/components/Form/CardForm";
 import Link from "next/link";
 
-export default function Topics({ roadmaps, setRoadmaps }) {
+export default function Topics({ subjects, setSubjects }) {
   const router = useRouter();
   const { id } = router.query;
   const [showForm, setShowForm] = useState(false);
 
-  const roadmap = roadmaps.find((r) => r.id === id);
+  const subject = subjects.find((r) => r.id === id);
 
-  if (!id || !roadmap) {
+  if (!id || !subject) {
     return <div>Loading...</div>;
   }
 
   const handleAddCard = (card) => {
     const newCard = { ...card, id: uid() };
 
-    const updatedTopics = roadmap.topics.map((topic) => {
+    const updatedTopics = subject.topics.map((topic) => {
       if (topic.title === card.selectedTopic) {
         return {
           ...topic,
@@ -29,17 +29,17 @@ export default function Topics({ roadmaps, setRoadmaps }) {
       return topic;
     });
 
-    const updatedRoadmaps = roadmaps.map((r) => {
-      if (r.id === roadmap.id) {
+    const updatedSubjects = subjects.map((s) => {
+      if (s.id === subject.id) {
         return {
-          ...r,
+          ...s,
           topics: updatedTopics,
         };
       }
-      return r;
+      return s;
     });
 
-    setRoadmaps(updatedRoadmaps);
+    setSubjects(updatedSubjects);
     setShowForm(false);
   };
 
@@ -58,10 +58,10 @@ export default function Topics({ roadmaps, setRoadmaps }) {
 
   return (
     <>
-      <Header>{roadmap.title}</Header>
+      <Header>{subject.title}</Header>
       <TopicsContainer>
-        {roadmap.topics.map((topic) => (
-          <Topic color={roadmap.color} key={topic.id}>
+        {subject.topics.map((topic) => (
+          <Topic color={subject.color} key={topic.id}>
             <Link href={`/topic/${topic.id}`}>{topic?.title}</Link>
             <br />
             Cards: {topic.cards?.length || 0}
@@ -75,8 +75,8 @@ export default function Topics({ roadmaps, setRoadmaps }) {
               onAddCard={handleAddCard}
               onCancel={handleCancel}
               onPopupContentClick={handlePopupContentClick}
-              topics={roadmap.topics}
-              color={roadmap.color}
+              topics={subject.topics}
+              color={subject.color}
             />
           </PopupOverlay>
         )}

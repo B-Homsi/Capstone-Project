@@ -5,22 +5,22 @@ import styled from "styled-components";
 import Card from "@/components/FlashCards/Card";
 import CardForm from "@/components/Form/CardForm";
 
-export default function Topic({ roadmaps, setRoadmaps }) {
+export default function Topic({ subjects, setSubjects }) {
   const router = useRouter();
   const { id } = router.query;
   const [showForm, setShowForm] = useState(false);
 
-  const roadmap = roadmaps?.find((r) => r.topics.some((t) => t.id === id));
-  const topic = roadmap?.topics.find((t) => t.id === id);
+  const subject = subjects?.find((s) => s.topics.some((t) => t.id === id));
+  const topic = subject?.topics.find((t) => t.id === id);
 
-  if (!id || !roadmap || !roadmap.topics) {
+  if (!id || !subject || !subject.topics) {
     return <div>Loading...</div>;
   }
 
   const handleAddCard = (card) => {
     const newCard = { ...card, id: uid() };
 
-    const updatedTopics = roadmap.topics.map((topic) => {
+    const updatedTopics = subject.topics.map((topic) => {
       if (topic.title === card.selectedTopic) {
         return {
           ...topic,
@@ -30,24 +30,23 @@ export default function Topic({ roadmaps, setRoadmaps }) {
       return topic;
     });
 
-    const updatedRoadmaps = roadmaps.map((r) => {
-      if (r.id === roadmap.id) {
+    const updatedSubjects = subjects.map((s) => {
+      if (s.id === subject.id) {
         return {
-          ...r,
+          ...s,
           topics: updatedTopics,
         };
       }
-      return r;
+      return s;
     });
 
-    setRoadmaps(updatedRoadmaps);
+    setSubjects(updatedSubjects);
     setShowForm(false);
   };
 
   const handleCancel = () => {
     setShowForm(false);
   };
-
   // Prevents the popup from closing when clicking inside the form
   const handlePopupContentClick = (event) => {
     event.stopPropagation();
@@ -58,8 +57,8 @@ export default function Topic({ roadmaps, setRoadmaps }) {
   };
 
   const handleDeleteCard = (id) => {
-    const updatedRoadmaps = roadmaps.map((r) => {
-      const updatedTopics = r.topics.map((topic) => {
+    const updatedSubjects = subjects.map((s) => {
+      const updatedTopics = s.topics.map((topic) => {
         const shouldRemoveCard = topic.cards?.some((card) => card.id === id);
 
         if (shouldRemoveCard) {
@@ -71,10 +70,10 @@ export default function Topic({ roadmaps, setRoadmaps }) {
         return topic;
       });
 
-      return { ...r, topics: updatedTopics };
+      return { ...s, topics: updatedTopics };
     });
 
-    setRoadmaps(updatedRoadmaps);
+    setSubjects(updatedSubjects);
   };
 
   return (
@@ -85,7 +84,7 @@ export default function Topic({ roadmaps, setRoadmaps }) {
           <Card
             key={card.id}
             card={card}
-            color={roadmap.color}
+            color={subject.color}
             onDeleteCard={handleDeleteCard}
           />
         ))}
@@ -98,8 +97,8 @@ export default function Topic({ roadmaps, setRoadmaps }) {
               onAddCard={handleAddCard}
               onCancel={handleCancel}
               onPopupContentClick={handlePopupContentClick}
-              topics={roadmap.topics}
-              color={roadmap.color}
+              topics={subject.topics}
+              color={subject.color}
               insideTopic={topic.title}
             />
           </PopupOverlay>
