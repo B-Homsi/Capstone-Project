@@ -27,6 +27,14 @@ export default function SubjectForm({
 
   const [errors, setErrors] = useState({});
 
+  const [topicToDelete, setTopicToDelete] = useState(null);
+
+  const handleTopicToDeleteClick = (id) => {
+    setTopicToDelete((prevTopicToDelete) =>
+      prevTopicToDelete === id ? null : id
+    );
+  };
+
   const handleTitleChange = (event) => {
     setTitle(event.target.value.slice(0, 22));
   };
@@ -46,6 +54,7 @@ export default function SubjectForm({
   const handleDeleteTopic = (id) => {
     const newTopics = topics.filter((topic) => topic.id !== id);
     setTopics(newTopics);
+    setTopicToDelete(null);
   };
 
   const handleColorChange = (event) => {
@@ -118,7 +127,14 @@ export default function SubjectForm({
                   required
                 />
               </label>
-              <button type="button" onClick={() => handleDeleteTopic(topic.id)}>
+              <button
+                type="button"
+                onClick={() =>
+                  editSubject
+                    ? handleTopicToDeleteClick(topic.id)
+                    : handleDeleteTopic(topic.id)
+                }
+              >
                 X
               </button>
               <span>{`${topic.title.length || 0}/28`}</span>
@@ -139,11 +155,22 @@ export default function SubjectForm({
           onChange={handleColorChange}
         />
       </form>
+
+      {topicToDelete && (
+        <DeleteConfirmation>
+          <p>Are you sure?</p>
+          <button onClick={() => handleDeleteTopic(topicToDelete)}>
+            Confirm
+          </button>
+          <button onClick={() => setTopicToDelete(null)}>Cancel</button>
+        </DeleteConfirmation>
+      )}
     </PopupContent>
   );
 }
 
 const PopupContent = styled.div`
+  position: relative;
   background: ${(props) => props.color};
   padding: 20px;
   overflow: scroll;
@@ -161,4 +188,20 @@ const ErrorMessage = styled.span`
   color: red;
   font-size: 0.8em;
   margin-left: 5px;
+`;
+
+const DeleteConfirmation = styled.div`
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
 `;

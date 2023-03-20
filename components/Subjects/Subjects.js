@@ -117,7 +117,7 @@ const DeleteConfirmation = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 20px;
-  `;
+`;
 
 const PopupOverlay = styled.div`
   position: fixed;
