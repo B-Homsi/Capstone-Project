@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import Popup from "./Popup";
+import OptionsPopup from "./OptionsPopup";
 
 export default function SubjectCard({
   subject,
@@ -41,7 +41,7 @@ export default function SubjectCard({
           Options
         </StyledOptionButton>
         {openedPopup === subject.id && (
-          <Popup
+          <OptionsPopup
             onEdit={handleEditSubjectClick}
             onDelete={handleDeleteSubjectClick}
           />
@@ -101,9 +101,8 @@ const StyledList = styled.ol`
   padding-left: 0;
 `;
 
-const StyledOptionButton = styled.button`
-
-`;
+const StyledOptionButton = styled.button``;
 
 const StyledLink = styled(Link)`
-  text-decoration: none;`;
+  text-decoration: none;
+`;

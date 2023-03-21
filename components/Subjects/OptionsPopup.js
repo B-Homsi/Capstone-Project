@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Popup({ onEdit, onDelete }) {
+export default function OptionsPopup({ onEdit, onDelete }) {
   return (
     <PopupContainer>
       <PopupButton onClick={onEdit}>Edit</PopupButton>

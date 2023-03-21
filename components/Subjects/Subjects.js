@@ -3,6 +3,8 @@ import { uid } from "uid";
 import styled from "styled-components";
 import SubjectForm from "../Form/SubjectForm";
 import SubjectCard from "./SubjectCard";
+import Popup from "@/components/Popup";
+import DeleteConfirmation from "@/components/DeleteConfirmation";
 
 export default function Subjects({ subjects, setSubjects }) {
   const [showForm, setShowForm] = useState(false);
@@ -83,53 +85,26 @@ export default function Subjects({ subjects, setSubjects }) {
       </StyledAddButton>
 
       {showForm && (
-        <PopupOverlay onClick={handleCancel}>
-          <SubjectForm
-            onPopupContentClick={handlePopupContentClick}
-            onAddSubject={handleAddSubject}
-            onEditSubject={handleEditSubject}
-            onCancel={handleCancel}
-            editSubject={editSubject}
-          />
-        </PopupOverlay>
+        <SubjectForm
+          onPopupContentClick={handlePopupContentClick}
+          onAddSubject={handleAddSubject}
+          onEditSubject={handleEditSubject}
+          onCancel={handleCancel}
+          editSubject={editSubject}
+        />
       )}
 
       {subjectToDelete && (
-        <PopupOverlay onClick={handleCancel}>
-          <DeleteConfirmation>
-            <p>Are you sure?</p>
-            <button onClick={() => handleDeleteSubject(subjectToDelete)}>
-              Confirm
-            </button>
-            <button onClick={() => setSubjectToDelete(null)}>Cancel</button>
-          </DeleteConfirmation>
-        </PopupOverlay>
+        <Popup onCancel={handleCancel} onContentClick={handlePopupContentClick}>
+          <DeleteConfirmation
+            onConfirm={() => handleDeleteSubject(subjectToDelete)}
+            onCancel={() => setSubjectToDelete(null)}
+          />
+        </Popup>
       )}
     </SubjectsContainer>
   );
 }
-
-const DeleteConfirmation = styled.div`
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
-  border-radius: 20px;
-`;
-
-const PopupOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const SubjectsContainer = styled.div`
   display: flex;

@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { uid } from "uid";
+import Popup from "@/components/Popup";
 import styled from "styled-components";
+import TitleInput from "./TitleInput";
+import TopicInput from "./TopicInput";
+import ErrorMessage from "./ErrorMessage";
+import DeleteConfirmation from "@/components/DeleteConfirmation";
 
 export default function SubjectForm({
   onAddSubject,
@@ -89,7 +94,11 @@ export default function SubjectForm({
   };
 
   return (
-    <PopupContent onClick={onPopupContentClick} color={color}>
+    <Popup
+      color={color}
+      onCancel={onCancel}
+      onContentClick={onPopupContentClick}
+    >
       <form onSubmit={handleSubmit}>
         <button type="button" onClick={onCancel}>
           X
@@ -99,46 +108,20 @@ export default function SubjectForm({
 
         <h2>{editSubject ? "Edit Subject" : "Add Subject"}</h2>
 
-        <label htmlFor="title">Title: </label>
-        <input
-          placeholder="CSS Basics"
-          type="text"
-          id="title"
-          value={title}
-          onChange={handleTitleChange}
-          maxLength={22}
-          required
-        />
-        <span>{`${title.length}/22`}</span>
-
+        <TitleInput value={title} onChange={handleTitleChange} maxLength={22} />
         {errors.title && <ErrorMessage>{errors.title}</ErrorMessage>}
 
         <Styledul>
           {topics.map((topic, index) => (
-            <li key={topic.id}>
-              <label>
-                {index + 1}.{" "}
-                <input
-                  placeholder={`Topic ${index + 1}`}
-                  type="text"
-                  value={topic.title}
-                  onChange={(event) => handleTopicChange(topic.id, event)}
-                  maxLength={28}
-                  required
-                />
-              </label>
-              <button
-                type="button"
-                onClick={() =>
-                  editSubject
-                    ? handleTopicToDeleteClick(topic.id)
-                    : handleDeleteTopic(topic.id)
-                }
-              >
-                X
-              </button>
-              <span>{`${topic.title.length || 0}/28`}</span>
-            </li>
+            <TopicInput
+              key={topic.id}
+              index={index}
+              topic={topic}
+              onTopicChange={handleTopicChange}
+              onTopicToDeleteClick={handleTopicToDeleteClick}
+              onDeleteTopic={handleDeleteTopic}
+              editSubject={editSubject}
+            />
           ))}
           {errors.topics && <ErrorMessage>{errors.topics}</ErrorMessage>}
         </Styledul>
@@ -157,51 +140,16 @@ export default function SubjectForm({
       </form>
 
       {topicToDelete && (
-        <DeleteConfirmation>
-          <p>Are you sure?</p>
-          <button onClick={() => handleDeleteTopic(topicToDelete)}>
-            Confirm
-          </button>
-          <button onClick={() => setTopicToDelete(null)}>Cancel</button>
-        </DeleteConfirmation>
+        <DeleteConfirmation
+          onConfirm={() => handleDeleteTopic(topicToDelete)}
+          onCancel={() => setTopicToDelete(null)}
+        />
       )}
-    </PopupContent>
+    </Popup>
   );
 }
-
-const PopupContent = styled.div`
-  position: relative;
-  background: ${(props) => props.color};
-  padding: 20px;
-  overflow: scroll;
-  max-height: 80%;
-  max-width: 80%;
-  border-radius: 20px;
-`;
 
 const Styledul = styled.ul`
   list-style: none;
   padding-left: 0;
-`;
-
-const ErrorMessage = styled.span`
-  color: red;
-  font-size: 0.8em;
-  margin-left: 5px;
-`;
-
-const DeleteConfirmation = styled.div`
-  position: fixed;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid black;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
-  border-radius: 20px;
 `;
