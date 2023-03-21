@@ -1,7 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
+import PopupWindow from "@/components/PopupWindow";
+import ErrorMessage from "../ErrorMessage";
 
-export default function CardForm({
+export default function FlashCardForm({
   onAddCard,
   onCancel,
   onPopupContentClick,
@@ -45,8 +47,17 @@ export default function CardForm({
   };
 
   return (
-    <PopupContent onClick={onPopupContentClick} color={color}>
+    <PopupWindow
+      color={color}
+      onCancel={onCancel}
+      onContentClick={onPopupContentClick}
+    >
       <form onSubmit={handleSubmit}>
+        <button type="button" onClick={onCancel}>
+          X
+        </button>
+        <button type="submit">Add</button>
+
         <h2>{"Add new Card"}</h2>
 
         <label htmlFor="topic">Topic</label>
@@ -71,7 +82,7 @@ export default function CardForm({
 
         <label htmlFor="question">Question</label>
         {questionError && (
-          <StyledError>Please enter a valid question!</StyledError>
+          <ErrorMessage>Please enter a valid question!</ErrorMessage>
         )}
         <textarea
           name="question"
@@ -85,7 +96,9 @@ export default function CardForm({
         ></textarea>
 
         <label htmlFor="answer">Answer</label>
-        {answerError && <StyledError>Please enter a valid answer!</StyledError>}
+        {answerError && (
+          <ErrorMessage>Please enter a valid answer!</ErrorMessage>
+        )}
         <textarea
           name="answer"
           rows="6"
@@ -96,13 +109,8 @@ export default function CardForm({
           onChange={(event) => handleAnswerChange(event)}
           required
         ></textarea>
-
-        <button type="submit">Add</button>
-        <button type="button" onClick={onCancel}>
-          X
-        </button>
       </form>
-    </PopupContent>
+    </PopupWindow>
   );
 }
 
@@ -113,9 +121,4 @@ const PopupContent = styled.div`
   max-height: 80%;
   max-width: 80%;
   border-radius: 20px;
-`;
-
-const StyledError = styled.p`
-  color: red;
-  background-color: white;
 `;

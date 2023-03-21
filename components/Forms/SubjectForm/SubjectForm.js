@@ -1,31 +1,34 @@
 import { useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
+import TitleInput from "./TitleInput";
+import TopicInput from "./TopicInput";
+import ErrorMessage from "../ErrorMessage";
+import PopupWindow from "@/components/PopupWindow";
+import DeleteConfirmation from "@/components/DeleteConfirmation";
 
-export default function RoadmapForm({
-  onAddRoadmap,
-  onEditRoadmap,
+export default function SubjectForm({
+  onAddSubject,
+  onEditSubject,
   onCancel,
-  editRoadmap,
+  editSubject,
   onPopupContentClick,
 }) {
-  const [title, setTitle] = useState(editRoadmap ? editRoadmap.title : "");
-
+  const [title, setTitle] = useState(editSubject ? editSubject.title : "");
   const [topics, setTopics] = useState(
-    editRoadmap
-      ? editRoadmap.topics
+    editSubject
+      ? editSubject.topics
       : [
           { id: uid(), title: "" },
           { id: uid(), title: "" },
           { id: uid(), title: "" },
         ]
   );
-
   const [color, setColor] = useState(
-    editRoadmap ? editRoadmap.color : "#ffffff"
+    editSubject ? editSubject.color : "#ffffff"
   );
-
   const [errors, setErrors] = useState({});
+  const [topicToDelete, setTopicToDelete] = useState(null);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value.slice(0, 22));
@@ -38,18 +41,25 @@ export default function RoadmapForm({
     setTopics(newTopics);
   };
 
+  const handleColorChange = (event) => {
+    setColor(event.target.value);
+  };
+
   const handleAddTopic = () => {
     const newTopics = [...topics, { id: uid(), title: "" }];
     setTopics(newTopics);
   };
 
+  const handleTopicToDeleteClick = (id) => {
+    setTopicToDelete((prevTopicToDelete) =>
+      prevTopicToDelete === id ? null : id
+    );
+  };
+
   const handleDeleteTopic = (id) => {
     const newTopics = topics.filter((topic) => topic.id !== id);
     setTopics(newTopics);
-  };
-
-  const handleColorChange = (event) => {
-    setColor(event.target.value);
+    setTopicToDelete(null);
   };
 
   const handleSubmit = (event) => {
@@ -71,52 +81,43 @@ export default function RoadmapForm({
 
     setErrors({});
 
-    if (editRoadmap) {
-      const editedRoadmap = { ...editRoadmap, title, topics, color };
-      onEditRoadmap(editedRoadmap);
+    if (editSubject) {
+      const editedSubject = { ...editSubject, title, topics, color };
+      onEditSubject(editedSubject);
     } else {
-      onAddRoadmap({ title, topics, color });
+      onAddSubject({ title, topics, color });
     }
   };
 
   return (
-    <PopupContent onClick={onPopupContentClick} color={color}>
+    <PopupWindow
+      color={color}
+      onCancel={onCancel}
+      onContentClick={onPopupContentClick}
+    >
       <form onSubmit={handleSubmit}>
-        <h2>{editRoadmap ? "Edit roadmap" : "Create new roadmap"}</h2>
+        <button type="button" onClick={onCancel}>
+          X
+        </button>
 
-        <label htmlFor="title">Title: </label>
-        <input
-          placeholder="CSS Basics"
-          type="text"
-          id="title"
-          value={title}
-          onChange={handleTitleChange}
-          maxLength={22}
-          required
-        />
-        <span>{`${title.length}/22`}</span>
+        <button type="submit">{editSubject ? "Update" : "Create"}</button>
 
+        <h2>{editSubject ? "Edit Subject" : "Add Subject"}</h2>
+
+        <TitleInput value={title} onChange={handleTitleChange} maxLength={22} />
         {errors.title && <ErrorMessage>{errors.title}</ErrorMessage>}
 
         <Styledul>
           {topics.map((topic, index) => (
-            <li key={topic.id}>
-              <label>
-                {index + 1}.{" "}
-                <input
-                  placeholder={`Topic ${index + 1}`}
-                  type="text"
-                  value={topic.title}
-                  onChange={(event) => handleTopicChange(topic.id, event)}
-                  maxLength={28}
-                  required
-                />
-              </label>
-              <button type="button" onClick={() => handleDeleteTopic(topic.id)}>
-                X
-              </button>
-              <span>{`${topic.title.length || 0}/28`}</span>
-            </li>
+            <TopicInput
+              key={topic.id}
+              index={index}
+              topic={topic}
+              onTopicChange={handleTopicChange}
+              onTopicToDeleteClick={handleTopicToDeleteClick}
+              onDeleteTopic={handleDeleteTopic}
+              editSubject={editSubject}
+            />
           ))}
           {errors.topics && <ErrorMessage>{errors.topics}</ErrorMessage>}
         </Styledul>
@@ -132,32 +133,19 @@ export default function RoadmapForm({
           value={color}
           onChange={handleColorChange}
         />
-
-        <button type="submit">{editRoadmap ? "Update" : "Create"}</button>
-        <button type="button" onClick={onCancel}>
-          X
-        </button>
       </form>
-    </PopupContent>
+
+      {topicToDelete && (
+        <DeleteConfirmation
+          onConfirm={() => handleDeleteTopic(topicToDelete)}
+          onCancel={() => setTopicToDelete(null)}
+        />
+      )}
+    </PopupWindow>
   );
 }
-
-const PopupContent = styled.div`
-  background: ${(props) => props.color};
-  padding: 20px;
-  overflow: scroll;
-  max-height: 80%;
-  max-width: 80%;
-  border-radius: 20px;
-`;
 
 const Styledul = styled.ul`
   list-style: none;
   padding-left: 0;
-`;
-
-const ErrorMessage = styled.span`
-  color: red;
-  font-size: 0.8em;
-  margin-left: 5px;
 `;
