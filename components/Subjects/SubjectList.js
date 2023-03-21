@@ -1,20 +1,28 @@
 import SubjectCard from "./SubjectCard";
 
-export default function SubjectList( { subjects, handleDeleteSubject, handleDeleteSubjectClick, handleEditSubjectClick, openedPopup, setOpenedPopup, setSubjectToDelete }) {
-    return (
-      <>
-        {subjects.map((subject) => (
-          <SubjectCard
-            key={subject.id}
-            subject={subject}
-            onDeleteSubject={handleDeleteSubject}
-            onDeleteSubjectClick={handleDeleteSubjectClick}
-            setSubjectToDelete={setSubjectToDelete}
-            onEditSubjectClick={handleEditSubjectClick}
-            openedPopup={openedPopup}
-            setOpenedPopup={setOpenedPopup}
-          />
-        ))}
-      </>
-    );
+export default function SubjectList({
+  subjects,
+  onDeleteSubject,
+  onDeleteSubjectClick,
+  onEditSubjectClick,
+  openedPopup,
+  setOpenedPopup,
+  setSubjectToDelete,
+}) {
+  return (
+    <>
+      {subjects.map((subject) => (
+        <SubjectCard
+          key={subject.id}
+          subject={subject}
+          onDeleteSubject={onDeleteSubject}
+          onDeleteSubjectClick={onDeleteSubjectClick}
+          setSubjectToDelete={setSubjectToDelete}
+          onEditSubjectClick={onEditSubjectClick}
+          openedPopup={openedPopup}
+          setOpenedPopup={setOpenedPopup}
+        />
+      ))}
+    </>
+  );
 }
