@@ -1,6 +1,6 @@
 import { useState } from "react";
-import styled from "styled-components";
 import Link from "next/link";
+import styled from "styled-components";
 import OptionsPopup from "./OptionsPopup";
 
 export default function SubjectCard({
@@ -17,6 +17,13 @@ export default function SubjectCard({
     setShowDetails(!showDetails);
   };
 
+  const handleTogglePopup = (event) => {
+    event.stopPropagation();
+    setOpenedPopup((prevOpenedPopup) =>
+      prevOpenedPopup === subject.id ? null : subject.id
+    );
+  };
+
   const handleEditSubjectClick = (event) => {
     event.stopPropagation();
     onEditSubjectClick(subject);
@@ -27,19 +34,13 @@ export default function SubjectCard({
     onDeleteSubjectClick(subject.id);
   };
 
-  const handleTogglePopup = (event) => {
-    event.stopPropagation();
-    setOpenedPopup((prevOpenedPopup) =>
-      prevOpenedPopup === subject.id ? null : subject.id
-    );
-  };
-
   return (
     <CardContainer color={subject.color} onClick={handleToggleDetailsClick}>
       <OptionsWrapper>
         <StyledOptionButton onClick={handleTogglePopup}>
           Options
         </StyledOptionButton>
+
         {openedPopup === subject.id && (
           <OptionsPopup
             onEdit={handleEditSubjectClick}
@@ -65,11 +66,6 @@ export default function SubjectCard({
   );
 }
 
-const OptionsWrapper = styled.div`
-  position: relative;
-  align-self: flex-end;
-`;
-
 const CardContainer = styled.div` 
   display: flex;
   flex-direction: column;
@@ -82,15 +78,12 @@ const CardContainer = styled.div`
   background-color: ${(props) => props.color};'
 `;
 
-const StyledTopic = styled.li`
-  padding: 15px 10px;
-  margin: 5px;
-  text-align: center;
-  border: 1px solid black;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  padding: 5px;
+const OptionsWrapper = styled.div`
+  position: relative;
+  align-self: flex-end;
 `;
+
+const StyledOptionButton = styled.button``;
 
 const StyledList = styled.ol`
   width: 90%;
@@ -101,8 +94,16 @@ const StyledList = styled.ol`
   padding-left: 0;
 `;
 
-const StyledOptionButton = styled.button``;
-
 const StyledLink = styled(Link)`
   text-decoration: none;
+`;
+
+const StyledTopic = styled.li`
+  padding: 15px 10px;
+  margin: 5px;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  padding: 5px;
 `;

@@ -1,12 +1,9 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
-import { uid } from "uid";
-import styled from "styled-components";
-import Card from "@/components/FlashCards/Card";
-import CardForm from "@/components/Form/CardForm";
 import { useTopic } from "@/hooks/useTopic";
 import { useSubjectUpdater } from "@/hooks/useSubjectUpdater";
-import { CardList } from "@/components/FlashCards/CardList";
+import styled from "styled-components";
+import FlashCardForm from "@/components/Forms/FlashCardForm/FlashCardForm";
+import FlashCardList from "@/components/FlashCards/FlashCardList";
 
 export default function Topic({ subjects, setSubjects }) {
   const [showForm, setShowForm] = useState(false);
@@ -16,6 +13,10 @@ export default function Topic({ subjects, setSubjects }) {
   if (!id || !subject || !subject.topics) {
     return <div>Loading...</div>;
   }
+
+  const handleAddCardClick = () => {
+    setShowForm(true);
+  };
 
   const handleAddCard = (card) => {
     addCard(card, subject.id);
@@ -29,29 +30,25 @@ export default function Topic({ subjects, setSubjects }) {
   const handleCancel = () => {
     setShowForm(false);
   };
+
   // Prevents the popup from closing when clicking inside the form
   const handlePopupContentClick = (event) => {
     event.stopPropagation();
-  };
-
-  const handleAddCardClick = () => {
-    setShowForm(true);
   };
 
   return (
     <>
       <Header>{topic.title}</Header>
       <CardsContainer>
-        <CardList
+        <FlashCardList
           cards={topic.cards}
           color={subject.color}
           onDeleteCard={handleDeleteCard}
         />
-
         <StyledAddButton onClick={handleAddCardClick}>Add Card</StyledAddButton>
 
         {showForm && (
-          <CardForm
+          <FlashCardForm
             onAddCard={handleAddCard}
             onCancel={handleCancel}
             onPopupContentClick={handlePopupContentClick}

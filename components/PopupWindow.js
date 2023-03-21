@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export default function Popup({ children, color, onCancel, onContentClick }) {
+export default function PopupWindow({
+  children,
+  color,
+  onCancel,
+  onContentClick,
+}) {
   return (
     <PopupOverlay onClick={onCancel}>
       <PopupContent onClick={onContentClick} color={color}>

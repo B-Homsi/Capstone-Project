@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { uid } from "uid";
-import Popup from "@/components/Popup";
 import styled from "styled-components";
 import TitleInput from "./TitleInput";
 import TopicInput from "./TopicInput";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../ErrorMessage";
+import PopupWindow from "@/components/PopupWindow";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
 
 export default function SubjectForm({
@@ -15,7 +15,6 @@ export default function SubjectForm({
   onPopupContentClick,
 }) {
   const [title, setTitle] = useState(editSubject ? editSubject.title : "");
-
   const [topics, setTopics] = useState(
     editSubject
       ? editSubject.topics
@@ -25,20 +24,11 @@ export default function SubjectForm({
           { id: uid(), title: "" },
         ]
   );
-
   const [color, setColor] = useState(
     editSubject ? editSubject.color : "#ffffff"
   );
-
   const [errors, setErrors] = useState({});
-
   const [topicToDelete, setTopicToDelete] = useState(null);
-
-  const handleTopicToDeleteClick = (id) => {
-    setTopicToDelete((prevTopicToDelete) =>
-      prevTopicToDelete === id ? null : id
-    );
-  };
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value.slice(0, 22));
@@ -51,19 +41,25 @@ export default function SubjectForm({
     setTopics(newTopics);
   };
 
+  const handleColorChange = (event) => {
+    setColor(event.target.value);
+  };
+
   const handleAddTopic = () => {
     const newTopics = [...topics, { id: uid(), title: "" }];
     setTopics(newTopics);
+  };
+
+  const handleTopicToDeleteClick = (id) => {
+    setTopicToDelete((prevTopicToDelete) =>
+      prevTopicToDelete === id ? null : id
+    );
   };
 
   const handleDeleteTopic = (id) => {
     const newTopics = topics.filter((topic) => topic.id !== id);
     setTopics(newTopics);
     setTopicToDelete(null);
-  };
-
-  const handleColorChange = (event) => {
-    setColor(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -94,7 +90,7 @@ export default function SubjectForm({
   };
 
   return (
-    <Popup
+    <PopupWindow
       color={color}
       onCancel={onCancel}
       onContentClick={onPopupContentClick}
@@ -145,7 +141,7 @@ export default function SubjectForm({
           onCancel={() => setTopicToDelete(null)}
         />
       )}
-    </Popup>
+    </PopupWindow>
   );
 }
 

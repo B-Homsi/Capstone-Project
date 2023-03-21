@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import ErrorMessage from "./ErrorMessage";
-import Popup from "@/components/Popup";
+import PopupWindow from "@/components/PopupWindow";
+import ErrorMessage from "../ErrorMessage";
 
-export default function CardForm({
+export default function FlashCardForm({
   onAddCard,
   onCancel,
   onPopupContentClick,
@@ -47,7 +47,7 @@ export default function CardForm({
   };
 
   return (
-    <Popup
+    <PopupWindow
       color={color}
       onCancel={onCancel}
       onContentClick={onPopupContentClick}
@@ -110,7 +110,7 @@ export default function CardForm({
           required
         ></textarea>
       </form>
-    </Popup>
+    </PopupWindow>
   );
 }
 

@@ -1,10 +1,10 @@
-import Card from "./Card";
+import FlashCard from "./FlashCard";
 
-export function CardList({ cards, color, onDeleteCard }) {
+export default function FlashCardList({ cards, color, onDeleteCard }) {
   return (
     <>
       {cards?.map((card) => (
-        <Card
+        <FlashCard
           key={card.id}
           card={card}
           color={color}

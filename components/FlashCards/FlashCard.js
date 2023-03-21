@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function Card({ card, color, onDeleteCard }) {
+export default function FlashCard({ card, color, onDeleteCard }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleToggleAnswerClick = () => {
