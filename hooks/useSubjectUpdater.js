@@ -1,16 +1,15 @@
 import { uid } from "uid";
 
 export const useSubjectUpdater = (subjects, setSubjects) => {
-  const addCard = (card, subjectId) => {
-    const newCard = { ...card, id: uid() };
-
+  const addCard = (cards, subjectId, selectedTopic) => {
     const updatedSubjects = subjects.map((s) => {
       if (s.id === subjectId) {
         const updatedTopics = s.topics.map((topic) => {
-          if (topic.title === card.selectedTopic) {
+          if (topic.title === selectedTopic) {
+            const newCards = cards.map((card) => ({ ...card, id: uid() }));
             return {
               ...topic,
-              cards: [...(topic.cards || []), newCard],
+              cards: [...(topic.cards || []), ...newCards],
             };
           }
           return topic;

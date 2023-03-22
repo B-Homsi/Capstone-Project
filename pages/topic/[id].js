@@ -18,8 +18,8 @@ export default function Topic({ subjects, setSubjects }) {
     setShowForm(true);
   };
 
-  const handleAddCard = (card) => {
-    addCard(card, subject.id);
+  const handleAddCard = (cards) => {
+    addCard(cards, subject.id, topic.title);
     setShowForm(false);
   };
 
@@ -54,7 +54,7 @@ export default function Topic({ subjects, setSubjects }) {
             onPopupContentClick={handlePopupContentClick}
             topics={subject.topics}
             color={subject.color}
-            insideTopic={topic.title}
+            selectedTopic={topic.title}
           />
         )}
       </CardsContainer>
