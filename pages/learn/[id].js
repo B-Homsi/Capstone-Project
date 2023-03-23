@@ -1,4 +1,4 @@
-import { useSubject } from "@/hooks/useSubject.js";
+import { getCardsForReviewTodayForSubject } from "@/utils/getAllCardsForReview";
 import { useRouter } from "next/router";
 
 export default function LearnSubject({ subjects, setSubjects }) {
@@ -11,6 +11,9 @@ export default function LearnSubject({ subjects, setSubjects }) {
     return <div>Loading...</div>;
   }
 
+  const cardsForReviewToday = getCardsForReviewTodayForSubject(subject);
+  console.log(cardsForReviewToday);
+  console.log(cardsForReviewToday);
   return (
     <>
       <h1>{subject.id}</h1>

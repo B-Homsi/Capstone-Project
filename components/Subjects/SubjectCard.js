@@ -10,6 +10,7 @@ export default function SubjectCard({
   openedPopup,
   setOpenedPopup,
   options,
+  cardsForReviewToday,
 }) {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -53,6 +54,9 @@ export default function SubjectCard({
       )}
 
       <h2>{subject.title}</h2>
+      {cardsForReviewToday && (
+        <p>Cards for review today: {cardsForReviewToday}</p>
+      )}
 
       {showDetails && (
         <StyledList>

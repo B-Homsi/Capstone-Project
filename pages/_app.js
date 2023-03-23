@@ -8,6 +8,7 @@ export default function App({ Component, pageProps }) {
     defaultValue: [...exampleData],
   });
 
+
   return (
     <>
       <GlobalStyle />

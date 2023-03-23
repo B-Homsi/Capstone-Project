@@ -1,5 +1,6 @@
 import SubjectCard from "./SubjectCard";
 import Link from "next/link";
+import { getCardsForReviewTodayForSubject } from "@/utils/getAllCardsForReview";
 
 export default function SubjectList({
   subjects,
@@ -15,11 +16,20 @@ export default function SubjectList({
   return (
     <>
       {inLearnPage &&
-        subjects.map((subject) => (
-          <Link key={subject.id} href={`/learn/${subject.id}`}>
-            <SubjectCard key={subject.id} subject={subject} />
-          </Link>
-        ))}
+        subjects.map((subject) => {
+          const cardsForReviewToday = getCardsForReviewTodayForSubject(subject).length;
+
+          return (
+            <Link key={subject.id} href={`/learn/${subject.id}`}>
+              <SubjectCard
+                key={subject.id}
+                subject={subject}
+                cardsForReviewToday={cardsForReviewToday}
+
+              />
+            </Link>
+          );
+        })}
 
       {!inLearnPage &&
         subjects.map((subject) => (
