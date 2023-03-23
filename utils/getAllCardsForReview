@@ -1,0 +1,12 @@
+export const getAllCardsForReviewToday = (subjects) => {
+  const cardsForReview = [];
+
+  subjects.forEach((subject) => {
+    subject.topics.forEach((topic) => {
+      const cards = getCardsForReviewToday(topic.cards);
+      cardsForReview.push(...cards);
+    });
+  });
+
+  return cardsForReview;
+};

@@ -75,6 +75,7 @@ export default function Subjects({ subjects, setSubjects }) {
         setSubjectToDelete={setSubjectToDelete}
         openedPopup={openedPopup}
         setOpenedPopup={setOpenedPopup}
+        options
       />
       <StyledAddButton onClick={handleAddSubjectClick}>
         Add Subject

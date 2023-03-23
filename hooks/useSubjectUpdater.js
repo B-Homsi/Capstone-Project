@@ -6,7 +6,12 @@ export const useSubjectUpdater = (subjects, setSubjects) => {
       if (s.id === subjectId) {
         const updatedTopics = s.topics.map((topic) => {
           if (topic.title === selectedTopic) {
-            const newCards = cards.map((card) => ({ ...card, id: uid() }));
+            const newCards = cards.map((card) => ({
+              ...card,
+              id: uid(),
+              lastReviewed: null,
+              stage: 0,
+            }));
             return {
               ...topic,
               cards: [...(topic.cards || []), ...newCards],
