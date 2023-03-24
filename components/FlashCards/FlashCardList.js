@@ -9,6 +9,7 @@ export default function FlashCardList({ cards, color, onDeleteCard }) {
           card={card}
           color={color}
           onDeleteCard={onDeleteCard}
+          showDeleteButton
         />
       ))}
     </>

@@ -1,6 +1,7 @@
 import SubjectCard from "./SubjectCard";
 import Link from "next/link";
 import { getCardsForReviewTodayForSubject } from "@/utils/getAllCardsForReview";
+import styled from "styled-components";
 
 export default function SubjectList({
   subjects,
@@ -17,17 +18,17 @@ export default function SubjectList({
     <>
       {inLearnPage &&
         subjects.map((subject) => {
-          const cardsForReviewToday = getCardsForReviewTodayForSubject(subject).length;
+          const cardsForReviewToday =
+            getCardsForReviewTodayForSubject(subject);
 
           return (
-            <Link key={subject.id} href={`/learn/${subject.id}`}>
+            <StyledLink key={subject.id} href={`/learn/${subject.id}`}>
               <SubjectCard
                 key={subject.id}
                 subject={subject}
                 cardsForReviewToday={cardsForReviewToday}
-
               />
-            </Link>
+            </StyledLink>
           );
         })}
 
@@ -49,3 +50,9 @@ export default function SubjectList({
     </>
   );
 }
+
+const StyledLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+  width: 80%;
+`;

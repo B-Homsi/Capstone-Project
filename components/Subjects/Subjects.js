@@ -5,6 +5,7 @@ import SubjectForm from "../Forms/SubjectForm/SubjectForm";
 import SubjectList from "./SubjectList";
 import PopupWindow from "@/components/PopupWindow";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
+import Link from "next/link";
 
 export default function Subjects({ subjects, setSubjects }) {
   const [showForm, setShowForm] = useState(false);
@@ -102,6 +103,8 @@ export default function Subjects({ subjects, setSubjects }) {
           />
         </PopupWindow>
       )}
+
+      <Link href="/learn">Learning Page</Link>
     </SubjectsContainer>
   );
 }

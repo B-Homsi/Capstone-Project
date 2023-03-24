@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function FlashCard({ card, color, onDeleteCard }) {
+export default function FlashCard({ card, color, onDeleteCard, showDeleteButton }) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleToggleAnswerClick = () => {
@@ -10,9 +10,11 @@ export default function FlashCard({ card, color, onDeleteCard }) {
 
   return (
     <StyledCard color={color}>
-      <StyledDeleteButton onClick={() => onDeleteCard(card.id)}>
-        X
-      </StyledDeleteButton>
+      {showDeleteButton && (
+        <StyledDeleteButton onClick={() => onDeleteCard(card.id)}>
+          X
+        </StyledDeleteButton>
+      )}
       <p>{card.question}</p>
       <StyledToggleButton onClick={handleToggleAnswerClick}>
         {showAnswer ? "Hide Answer" : "Show Answer"}

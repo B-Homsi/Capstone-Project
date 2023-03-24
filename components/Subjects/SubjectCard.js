@@ -55,7 +55,7 @@ export default function SubjectCard({
 
       <h2>{subject.title}</h2>
       {cardsForReviewToday && (
-        <p>Cards for review today: {cardsForReviewToday}</p>
+        <p>Cards for review today: {cardsForReviewToday.length}</p>
       )}
 
       {showDetails && (
