@@ -22,7 +22,9 @@ export default function LearnSubject({ subjects, setSubjects }) {
     return <div>Loading...</div>;
   }
 
-  
+  if (cardsForReviewToday.length === 0) {
+    return <div>No cards for review today</div>;
+  }
 
   const handlePreviousClick = () => {
     if (currentCardIndex > 0) {
@@ -36,11 +38,11 @@ export default function LearnSubject({ subjects, setSubjects }) {
     }
   };
 
-  const reviewCard = (cardId) => {
+  const updateCorrectCards = (cards) => {
     const updatedSubjects = subjects.map((s) => {
       const updatedTopics = s.topics.map((topic) => {
         const updatedCards = topic.cards?.map((card) => {
-          if (card.id === cardId) {
+          if (cards.includes(card.id)) {
             return {
               ...card,
               stage: card.stage + 1,
@@ -54,7 +56,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
       return { ...s, topics: updatedTopics };
     });
 
-    setSubjects(updatedSubjects);
+    return updatedSubjects;
   };
 
   const handleCorrectClick = () => {
@@ -73,14 +75,21 @@ export default function LearnSubject({ subjects, setSubjects }) {
     setShowResultScreen(true);
 
     setTimeout(() => {
-      correctCardIds.forEach((cardId) => {
-        reviewCard(cardId);
-      });
+      const updatedSubjects = updateCorrectCards(correctCardIds);
+      setSubjects(updatedSubjects);
 
-      setTimeout(() => {
-        router.push("/learn");
-      }, 3000);
-    }, 1000);
+      router.push("/learn");
+    }, 10000);
+  };
+
+  const getMotivationalMessage = (percentage) => {
+    if (percentage >= 80) {
+      return "Great job! Keep up the good work!";
+    } else if (percentage >= 50) {
+      return "Not bad! Keep practicing to improve!";
+    } else {
+      return "Don't worry! Keep studying and you'll get better!";
+    }
   };
 
   const isLastCard = currentCardIndex === cardsForReviewToday.length - 1;
@@ -90,16 +99,26 @@ export default function LearnSubject({ subjects, setSubjects }) {
     ((currentCardIndex + 1) / totalCards) * 100
   );
 
+  const incorrectCardCount = cardsForReviewToday.length - correctCardIds.length;
+  const correctCardCount = correctCardIds.length;
+  const correctPercentage = Math.round((correctCardCount / totalCards) * 100);
+
   return (
     <>
       <h1>{subject.title}</h1>
-      <ProgressBarContainer>
+      <AnimatedProgressBarContainer showResultScreen={showResultScreen}>
         <ProgressBarFill percentage={progressPercentage} />
+        <IncorrectProgressBarFill
+          percentage={showResultScreen ? 100 - correctPercentage : 0}
+          marginLeftPercentage={correctPercentage}
+        />
         <ProgressText>
-          {currentCardIndex + 1} / {totalCards}
+          {showResultScreen
+            ? `${correctCardCount} / ${totalCards}`
+            : `${currentCardIndex + 1} / ${totalCards}`}
         </ProgressText>
-      </ProgressBarContainer>
-      {cardsForReviewToday.length > 0 && (
+      </AnimatedProgressBarContainer>
+      {!showResultScreen && cardsForReviewToday.length > 0 && (
         <>
           <button onClick={handlePreviousClick}>Previous</button>
           {isLastCard ? (
@@ -108,12 +127,25 @@ export default function LearnSubject({ subjects, setSubjects }) {
             <button onClick={handleSkipClick}>Skip</button>
           )}
           {cardsForReviewToday[currentCardIndex] && (
-            <FlashCard card={cardsForReviewToday[currentCardIndex]} />
+            <FlashCard
+              card={cardsForReviewToday[currentCardIndex]}
+              color={subject.color}
+            />
           )}
           <button onClick={handleIncorrectClick}>Incorrect</button>
           <button onClick={handleCorrectClick}>Correct</button>
         </>
       )}
+      <ResultScreen showResultScreen={showResultScreen}>
+        <h3>{getMotivationalMessage(correctPercentage)}</h3>
+        <h2>Results</h2>
+        <p>
+          Correct: {correctCardCount} ({correctPercentage}%)
+        </p>
+        <p>
+          Incorrect: {incorrectCardCount} ({100 - correctPercentage}%)
+        </p>
+      </ResultScreen>
     </>
   );
 }
@@ -144,10 +176,11 @@ const ProgressText = styled.span`
 
 const AnimatedProgressBarContainer = styled(ProgressBarContainer)`
   position: ${(props) => (props.showResultScreen ? "fixed" : "relative")};
-  top: ${(props) => (props.showResultScreen ? "50%" : "auto")};
-  left: ${(props) => (props.showResultScreen ? "50%" : "auto")};
+  top: ${(props) => (props.showResultScreen ? "44%" : "auto")};
+  left: ${(props) =>
+    props.showResultScreen ? "0" : "auto"}; // Change this line
   transform: ${(props) =>
-    props.showResultScreen ? "translate(-50%, -50%)" : "none"};
+    props.showResultScreen ? "translateY(-50%)" : "none"}; // Change this line
   transition: top 1s ease, left 1s ease, transform 1s ease;
 `;
 
@@ -157,7 +190,7 @@ const ResultScreen = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,4 +198,13 @@ const ResultScreen = styled.div`
   opacity: ${(props) => (props.showResultScreen ? "1" : "0")};
   visibility: ${(props) => (props.showResultScreen ? "visible" : "hidden")};
   transition: opacity 1s ease, visibility 1s ease;
+`;
+
+const IncorrectProgressBarFill = styled.div`
+  background-color: #f44336; // red color
+  border-radius: 5px;
+  position: absolute;
+  height: 100%;
+  width: ${(props) => props.percentage}%;
+  margin-left: ${(props) => props.marginLeftPercentage}%;
 `;

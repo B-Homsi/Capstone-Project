@@ -1,7 +1,12 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export default function FlashCard({ card, color, onDeleteCard, showDeleteButton }) {
+export default function FlashCard({
+  card,
+  color,
+  onDeleteCard,
+  showDeleteButton,
+}) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const handleToggleAnswerClick = () => {
@@ -9,20 +14,27 @@ export default function FlashCard({ card, color, onDeleteCard, showDeleteButton 
   };
 
   return (
-    <StyledCard color={color}>
-      {showDeleteButton && (
-        <StyledDeleteButton onClick={() => onDeleteCard(card.id)}>
-          X
-        </StyledDeleteButton>
-      )}
-      <p>{card.question}</p>
-      <StyledToggleButton onClick={handleToggleAnswerClick}>
-        {showAnswer ? "Hide Answer" : "Show Answer"}
-      </StyledToggleButton>
-      {showAnswer && <p>{card.answer}</p>}
-    </StyledCard>
+    <CardWrapper onClick={handleToggleAnswerClick}>
+      <StyledCard color={color} showAnswer={showAnswer}>
+        {showDeleteButton && (
+          <StyledDeleteButton onClick={() => onDeleteCard(card.id)}>
+            X
+          </StyledDeleteButton>
+        )}
+        {!showAnswer && <p>{card.question}</p>}
+        {showAnswer && <CardContent isAnswer={true}>{card.answer}</CardContent>}
+      </StyledCard>
+    </CardWrapper>
   );
 }
+
+const CardContent = styled.p`
+  ${(props) =>
+    props.isAnswer &&
+    css`
+      transform: rotateY(180deg);
+    `}
+`;
 
 const StyledDeleteButton = styled.button`
   align-self: flex-end;
@@ -31,19 +43,31 @@ const StyledDeleteButton = styled.button`
   font-size: 1.5rem;
 `;
 
-const StyledToggleButton = styled.button`
-  background-color: #f5f5f5;
-  font-size: 1.5rem;
+const CardWrapper = styled.li`
+  list-style: none;
+  perspective: 1000px;
+  width: 100%;
+  margin: 10px;
 `;
 
-const StyledCard = styled.li` 
+const StyledCard = styled.div`
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  width: 100%;
   padding: 20px;
   margin: 10px;
-  border: 2px solid black;
+  border: 1px solid black;
   width: 80%;
-  border-radius: 20px;
+  border-radius: 5px;
+  transition: transform 0.6s;
+;
+  ${(props) =>
+    props.showAnswer &&
+    css`
+      transform: rotateY(180deg);
+    `}
   background-color: ${(props) => props.color};'
 `;

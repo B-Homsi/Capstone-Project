@@ -18,8 +18,7 @@ export default function SubjectList({
     <>
       {inLearnPage &&
         subjects.map((subject) => {
-          const cardsForReviewToday =
-            getCardsForReviewTodayForSubject(subject);
+          const cardsForReviewToday = getCardsForReviewTodayForSubject(subject);
 
           return (
             <StyledLink key={subject.id} href={`/learn/${subject.id}`}>
@@ -27,6 +26,7 @@ export default function SubjectList({
                 key={subject.id}
                 subject={subject}
                 cardsForReviewToday={cardsForReviewToday}
+                inLearnPage={inLearnPage}
               />
             </StyledLink>
           );
@@ -44,7 +44,6 @@ export default function SubjectList({
             openedPopup={openedPopup}
             setOpenedPopup={setOpenedPopup}
             options={options}
-            inLearnPage={inLearnPage}
           />
         ))}
     </>
