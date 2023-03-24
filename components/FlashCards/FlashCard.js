@@ -8,66 +8,100 @@ export default function FlashCard({
   showDeleteButton,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
+  
 
   const handleToggleAnswerClick = () => {
     setShowAnswer(!showAnswer);
   };
 
   return (
-    <CardWrapper onClick={handleToggleAnswerClick}>
-      <StyledCard color={color} showAnswer={showAnswer}>
-        {showDeleteButton && (
-          <StyledDeleteButton onClick={() => onDeleteCard(card.id)}>
-            X
-          </StyledDeleteButton>
-        )}
-        {!showAnswer && <p>{card.question}</p>}
-        {showAnswer && <CardContent isAnswer={true}>{card.answer}</CardContent>}
-      </StyledCard>
+    <CardWrapper>
+      {showDeleteButton && (
+        <StyledDeleteButton
+          onClick={(e) => {
+            e.stopPropagation();
+            onDeleteCard(card.id);
+          }}
+        >
+          X
+        </StyledDeleteButton>
+      )}
+      <Card onClick={handleToggleAnswerClick}>
+        <StyledCard color={color} showAnswer={showAnswer}>
+          <CardContent>
+            <p>{card.question}</p>
+          </CardContent>
+          <CardContent backFace>
+            <p>{card.answer}</p>
+          </CardContent>
+        </StyledCard>
+      </Card>
     </CardWrapper>
   );
 }
 
-const CardContent = styled.p`
+const CardContent = styled.div`
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
   ${(props) =>
-    props.isAnswer &&
+    props.backFace &&
     css`
-      transform: rotateY(180deg);
+      transform: rotateX(180deg);
     `}
 `;
 
 const StyledDeleteButton = styled.button`
-  align-self: flex-end;
+  position: absolute;
+  top: 0;
+  right: 0;
   background-color: transparent;
   border: none;
   font-size: 1.5rem;
+  z-index: 1;
+  opacity: 1;
+  ${(props) =>
+    props.hide &&
+    css`
+      opacity: 0;
+    `}
 `;
 
 const CardWrapper = styled.li`
   list-style: none;
   perspective: 1000px;
-  width: 100%;
+  width: 80%;
   margin: 10px;
+  position: relative;
+  height: 200px;
+`;
+
+const Card = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
 `;
 
 const StyledCard = styled.div`
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
   height: 100%;
-  width: 100%;
-  padding: 20px;
-  margin: 10px;
+  background-color: ${(props) => props.color};
   border: 1px solid black;
-  width: 80%;
   border-radius: 5px;
-  transition: transform 0.6s;
-;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
   ${(props) =>
     props.showAnswer &&
     css`
-      transform: rotateY(180deg);
+      transform: rotateX(180deg);
     `}
-  background-color: ${(props) => props.color};'
 `;
