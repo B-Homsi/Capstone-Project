@@ -5,17 +5,16 @@ import SubjectForm from "../Forms/SubjectForm/SubjectForm";
 import SubjectList from "./SubjectList";
 import PopupWindow from "@/components/PopupWindow";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
-import Link from "next/link";
 
-export default function Subjects({ subjects, setSubjects }) {
-  const [showForm, setShowForm] = useState(false);
+export default function Subjects({
+  subjects,
+  setSubjects,
+  showForm,
+  setShowForm,
+}) {
   const [editSubject, setEditSubject] = useState(null);
   const [openedPopup, setOpenedPopup] = useState(null);
   const [subjectToDelete, setSubjectToDelete] = useState(null);
-
-  const handleAddSubjectClick = () => {
-    setShowForm(true);
-  };
 
   const handleAddSubject = (subject) => {
     const newSubject = { ...subject, id: uid() };
@@ -78,9 +77,6 @@ export default function Subjects({ subjects, setSubjects }) {
         setOpenedPopup={setOpenedPopup}
         options
       />
-      <StyledAddButton onClick={handleAddSubjectClick}>
-        Add Subject
-      </StyledAddButton>
 
       {showForm && (
         <SubjectForm
@@ -103,7 +99,6 @@ export default function Subjects({ subjects, setSubjects }) {
           />
         </PopupWindow>
       )}
-      <Link href="/learn">Learning Page</Link>
     </SubjectsContainer>
   );
 }
@@ -114,9 +109,4 @@ const SubjectsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledAddButton = styled.button`
-  background-color: transparent;
-  font-size: 1.5rem;
 `;

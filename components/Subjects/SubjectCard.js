@@ -37,6 +37,10 @@ export default function SubjectCard({
     onDeleteSubjectClick(subject.id);
   };
 
+  const handleTopicLinkClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <CardContainer
       color={subject.color}
@@ -65,7 +69,11 @@ export default function SubjectCard({
       {showDetails && (
         <StyledList>
           {subject.topics.map((topic) => (
-            <StyledLink key={topic.id} href={`/topic/${topic.id}`}>
+            <StyledLink
+              key={topic.id}
+              href={`/topic/${topic.id}`}
+              onClick={handleTopicLinkClick}
+            >
               <StyledTopic>
                 {topic?.title} <p>Cards: {topic.cards?.length || 0}</p>
               </StyledTopic>

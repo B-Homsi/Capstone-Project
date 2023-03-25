@@ -1,22 +1,21 @@
-import { useState } from "react";
 import { useTopic } from "@/hooks/useTopic";
 import { useSubjectUpdater } from "@/hooks/useSubjectUpdater";
 import styled from "styled-components";
 import FlashCardForm from "@/components/Forms/FlashCardForm/FlashCardForm";
 import FlashCardList from "@/components/FlashCards/FlashCardList";
 
-export default function Topic({ subjects, setSubjects }) {
-  const [showForm, setShowForm] = useState(false);
+export default function Topic({
+  subjects,
+  setSubjects,
+  showForm,
+  setShowForm,
+}) {
   const { id, subject, topic } = useTopic(subjects);
   const { addCard, deleteCard } = useSubjectUpdater(subjects, setSubjects);
 
   if (!id || !subject || !subject.topics) {
     return <div>Loading...</div>;
   }
-
-  const handleAddCardClick = () => {
-    setShowForm(true);
-  };
 
   const handleAddCard = (cards) => {
     addCard(cards, subject.id, topic.title);
@@ -45,7 +44,6 @@ export default function Topic({ subjects, setSubjects }) {
           color={subject.color}
           onDeleteCard={handleDeleteCard}
         />
-        <StyledAddButton onClick={handleAddCardClick}>Add Card</StyledAddButton>
 
         {showForm && (
           <FlashCardForm
@@ -72,9 +70,4 @@ const CardsContainer = styled.ul`
   align-items: center;
   justify-content: center;
   padding-left: 0;
-`;
-
-const StyledAddButton = styled.button`
-  background-color: transparent;
-  font-size: 1.5rem;
 `;
