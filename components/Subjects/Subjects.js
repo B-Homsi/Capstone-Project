@@ -103,7 +103,6 @@ export default function Subjects({ subjects, setSubjects }) {
           />
         </PopupWindow>
       )}
-
       <Link href="/learn">Learning Page</Link>
     </SubjectsContainer>
   );

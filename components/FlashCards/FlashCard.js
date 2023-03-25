@@ -8,7 +8,6 @@ export default function FlashCard({
   showDeleteButton,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
-  
 
   const handleToggleAnswerClick = () => {
     setShowAnswer(!showAnswer);
@@ -39,6 +38,36 @@ export default function FlashCard({
     </CardWrapper>
   );
 }
+
+const CardWrapper = styled.li`
+  list-style: none;
+  perspective: 1000px;
+  width: 80%;
+  margin: 10px;
+  position: relative;
+  height: 200px;
+`;
+
+const Card = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+`;
+
+const StyledCard = styled.div`
+  position: relative;
+  height: 100%;
+  background-color: ${(props) => props.color};
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+  ${(props) =>
+    props.showAnswer &&
+    css`
+      transform: rotateX(180deg);
+    `}
+`;
 
 const CardContent = styled.div`
   backface-visibility: hidden;
@@ -73,35 +102,5 @@ const StyledDeleteButton = styled.button`
     props.hide &&
     css`
       opacity: 0;
-    `}
-`;
-
-const CardWrapper = styled.li`
-  list-style: none;
-  perspective: 1000px;
-  width: 80%;
-  margin: 10px;
-  position: relative;
-  height: 200px;
-`;
-
-const Card = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
-`;
-
-const StyledCard = styled.div`
-  position: relative;
-  height: 100%;
-  background-color: ${(props) => props.color};
-  border: 1px solid black;
-  border-radius: 5px;
-  transition: transform 0.4s;
-  transform-style: preserve-3d;
-  ${(props) =>
-    props.showAnswer &&
-    css`
-      transform: rotateX(180deg);
     `}
 `;
