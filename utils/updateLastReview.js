@@ -1,8 +1,8 @@
-export const reviewCard = (cardId) => {
+export const updateLastReview = (cards, subjects) => {
   const updatedSubjects = subjects.map((s) => {
     const updatedTopics = s.topics.map((topic) => {
-      const updatedCards = topic.cards.map((card) => {
-        if (card.id === cardId) {
+      const updatedCards = topic.cards?.map((card) => {
+        if (cards.includes(card.id)) {
           return {
             ...card,
             stage: card.stage + 1,
@@ -16,5 +16,5 @@ export const reviewCard = (cardId) => {
     return { ...s, topics: updatedTopics };
   });
 
-  setSubjects(updatedSubjects);
+  return updatedSubjects;
 };

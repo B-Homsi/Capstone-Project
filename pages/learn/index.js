@@ -6,9 +6,11 @@ export default function Learn({ subjects }) {
     <>
       <h1>Lets Learn</h1>
       <h2>Choose a Subject:</h2>
-      <SubjectsContainer>
-        <SubjectList subjects={subjects} options={false} inLearnPage />
-      </SubjectsContainer>
+      <main>
+        <SubjectsContainer>
+          <SubjectList subjects={subjects} options={false} inLearnPage />
+        </SubjectsContainer>
+      </main>
     </>
   );
 }
@@ -20,4 +22,3 @@ const SubjectsContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
-

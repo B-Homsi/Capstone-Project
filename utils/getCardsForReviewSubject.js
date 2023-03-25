@@ -1,6 +1,6 @@
 import { getCardsForReviewToday } from "./getCardsForReviewToday";
 
-export const getCardsForReviewTodayForSubject = (subject) => {
+export const getCardsForReviewSubject = (subject) => {
   const cardsForReview = [];
 
   subject?.topics.forEach((topic) => {

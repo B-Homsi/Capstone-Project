@@ -1,6 +1,6 @@
 import SubjectCard from "./SubjectCard";
 import Link from "next/link";
-import { getCardsForReviewTodayForSubject } from "@/utils/getAllCardsForReview";
+import { getCardsForReviewSubject } from "@/utils/getCardsForReviewSubject";
 import styled from "styled-components";
 
 export default function SubjectList({
@@ -18,7 +18,7 @@ export default function SubjectList({
     <>
       {inLearnPage &&
         subjects.map((subject) => {
-          const cardsForReviewToday = getCardsForReviewTodayForSubject(subject);
+          const cardsForReviewToday = getCardsForReviewSubject(subject);
 
           return (
             <StyledLink key={subject.id} href={`/learn/${subject.id}`}>
