@@ -9,6 +9,9 @@ export default function SubjectCard({
   onEditSubjectClick,
   openedPopup,
   setOpenedPopup,
+  options,
+  cardsForReviewToday,
+  inLearnPage,
 }) {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -35,21 +38,29 @@ export default function SubjectCard({
   };
 
   return (
-    <CardContainer color={subject.color} onClick={handleToggleDetailsClick}>
-      <OptionsWrapper>
-        <StyledOptionButton onClick={handleTogglePopup}>
-          Options
-        </StyledOptionButton>
+    <CardContainer
+      color={subject.color}
+      onClick={inLearnPage ? null : handleToggleDetailsClick}
+    >
+      {options && (
+        <OptionsWrapper>
+          <StyledOptionButton onClick={handleTogglePopup}>
+            Options
+          </StyledOptionButton>
 
-        {openedPopup === subject.id && (
-          <OptionsPopup
-            onEdit={handleEditSubjectClick}
-            onDelete={handleDeleteSubjectClick}
-          />
-        )}
-      </OptionsWrapper>
+          {openedPopup === subject.id && (
+            <OptionsPopup
+              onEdit={handleEditSubjectClick}
+              onDelete={handleDeleteSubjectClick}
+            />
+          )}
+        </OptionsWrapper>
+      )}
 
       <h2>{subject.title}</h2>
+      {cardsForReviewToday && (
+        <p>Cards for review today: {cardsForReviewToday.length}</p>
+      )}
 
       {showDetails && (
         <StyledList>
