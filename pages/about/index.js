@@ -93,11 +93,14 @@ export default function About() {
       </MotivationalMessage>
       <Footer>
         <p>Copyright © 2023 Bilal Homsi. All rights reserved.</p>
-        <Link href="[GitHub URL]" target="_blank" rel="noopener noreferrer">
+        <Link href="https://github.com/B-Homsi" target="_blank">
           GitHub
         </Link>
         {" | "}
-        <Link href="[LinkedIn URL]" target="_blank" rel="noopener noreferrer">
+        <Link
+          href="https://www.linkedin.com/in/bilal-homsi-327695263/"
+          target="_blank"
+        >
           LinkedIn
         </Link>
       </Footer>
