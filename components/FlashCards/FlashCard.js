@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 export default function FlashCard({
@@ -8,6 +8,10 @@ export default function FlashCard({
   showDeleteButton,
 }) {
   const [showAnswer, setShowAnswer] = useState(false);
+
+  useEffect(() => {
+    setShowAnswer(false);
+  }, [card]);
 
   const handleToggleAnswerClick = () => {
     setShowAnswer(!showAnswer);
