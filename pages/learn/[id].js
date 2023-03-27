@@ -154,6 +154,10 @@ const StyledPreviousButton = styled.button`
   font-weight: 600;
   shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 
+  &:active {
+    opacity: 0.6;
+  }
+
   &:disabled {
     opacity: 0.5;
   }
@@ -169,6 +173,10 @@ const StyledSkipButton = styled.button`
   font-size: 12px;
   font-weight: 600;
   shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
 `;
 
 const StyledDoneButton = styled.button`
@@ -181,6 +189,10 @@ const StyledDoneButton = styled.button`
   font-size: 12px;
   font-weight: 600;
   shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
 `;
 
 const StyledCorrectButton = styled.button`
@@ -193,6 +205,10 @@ const StyledCorrectButton = styled.button`
   font-size: 12px;
   font-weight: 600;
   shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
 `;
 
 const StyledIncorrectButton = styled.button`
@@ -204,6 +220,10 @@ const StyledIncorrectButton = styled.button`
   font-size: 12px;
   font-weight: 600;
   shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.9);
+
+  &:active {
+    opacity: 0.6;
+  }
 `;
 
 const Main = styled.main`

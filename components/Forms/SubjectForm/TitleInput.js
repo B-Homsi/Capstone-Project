@@ -11,7 +11,6 @@ export default function TitleInput({ value, onChange, maxLength}) {
         maxLength={maxLength}
         required
       />
-      <span>{`${value.length}/${maxLength}`}</span>
     </>
   );
 }

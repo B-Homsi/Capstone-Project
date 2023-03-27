@@ -29,7 +29,6 @@ export default function TopicInput({
       >
         X
       </button>
-      <span>{`${topic.title.length || 0}/28`}</span>
     </li>
   );
 }
