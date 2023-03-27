@@ -1,7 +1,11 @@
 import Subjects from "../components/Subjects/Subjects";
 
+import Header from "@/components/Header/Header";
+
 export default function Home({ subjects, setSubjects, showForm, setShowForm }) {
   return (
+    <>
+    <Header>Welcome</Header>
     <main>
       <Subjects
         subjects={subjects}
@@ -10,5 +14,6 @@ export default function Home({ subjects, setSubjects, showForm, setShowForm }) {
         showForm={showForm}
       />
     </main>
+    </>
   );
 }

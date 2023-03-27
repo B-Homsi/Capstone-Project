@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { uid } from "uid";
+import { colors } from "@/assets/colors";
 import styled from "styled-components";
 import TitleInput from "./TitleInput";
 import TopicInput from "./TopicInput";
@@ -127,12 +128,11 @@ export default function SubjectForm({
         </button>
 
         <label htmlFor="color">Color</label>
-        <input
-          type="color"
-          id="color"
-          value={color}
-          onChange={handleColorChange}
-        />
+        <ColorSelector id="color" value={color} onChange={handleColorChange}>
+          {colors.map((color) => (
+            <ColorOption key={color} value={color} color={color} />
+          ))}
+        </ColorSelector>
       </form>
 
       {topicToDelete && (
@@ -148,4 +148,21 @@ export default function SubjectForm({
 const Styledul = styled.ul`
   list-style: none;
   padding-left: 0;
+`;
+
+const ColorSelector = styled.select`
+  width: 18%;
+  padding: 4px;
+  margin: 4px 0;
+  border: 1px solid #ccc;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+`;
+
+const ColorOption = styled.option`
+  background-color: ${(props) => props.color};
+  padding: 8px;
+  font-weight: bold;
+  text-align: center;
 `;

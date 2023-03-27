@@ -4,6 +4,7 @@ import { getCardsForReviewSubject } from "@/utils/getCardsForReviewSubject";
 import { updateLastReview } from "@/utils/updateLastReview";
 import FlashCard from "@/components/FlashCards/FlashCard";
 import styled from "styled-components";
+import Header from "@/components/Header/Header";
 
 export default function LearnSubject({ subjects, setSubjects }) {
   const router = useRouter();
@@ -60,7 +61,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
       const updatedSubjects = updateLastReview(correctCardIds, subjects);
       setSubjects(updatedSubjects);
       router.push("/learn");
-    }, 8000);
+    }, 6000);
   };
 
   const getMotivationalMessage = (percentage) => {
@@ -75,7 +76,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
 
   return (
     <>
-      <h1>{subject.title}</h1>
+      <Header>{subject.title}</Header>
       <AnimatedProgressBarContainer showResultScreen={showResultScreen}>
         <ProgressBarFill percentage={progressPercentage} />
         <IncorrectProgressBarFill
@@ -89,22 +90,37 @@ export default function LearnSubject({ subjects, setSubjects }) {
         </ProgressText>
       </AnimatedProgressBarContainer>
       {!showResultScreen && cardsForReviewToday.length > 0 && (
-        <>
-          <button onClick={handlePreviousClick}>Previous</button>
-          {isLastCard ? (
-            <button onClick={handleDoneClick}>Done</button>
-          ) : (
-            <button onClick={handleSkipClick}>Skip</button>
-          )}
+        <Main>
+          <StyledButtonContainer>
+            <StyledPreviousButton
+              onClick={handlePreviousClick}
+              disabled={currentCardIndex === 0 ? true : false}
+            >
+              PREVIOUS
+            </StyledPreviousButton>
+            {isLastCard ? (
+              <StyledDoneButton onClick={handleDoneClick}>
+                DONE
+              </StyledDoneButton>
+            ) : (
+              <StyledSkipButton onClick={handleSkipClick}>
+                SKIP
+              </StyledSkipButton>
+            )}
+          </StyledButtonContainer>
           {cardsForReviewToday[currentCardIndex] && (
             <FlashCard
               card={cardsForReviewToday[currentCardIndex]}
               color={subject.color}
             />
           )}
-          <button onClick={handleIncorrectClick}>Incorrect</button>
-          <button onClick={handleCorrectClick}>Correct</button>
-        </>
+          <StyledCorrectButton onClick={handleCorrectClick}>
+            CORRECT
+          </StyledCorrectButton>
+          <StyledIncorrectButton onClick={handleIncorrectClick}>
+            INCORRECT
+          </StyledIncorrectButton>
+        </Main>
       )}
       <ResultScreen showResultScreen={showResultScreen}>
         <h3>{getMotivationalMessage(correctPercentage)}</h3>
@@ -119,6 +135,84 @@ export default function LearnSubject({ subjects, setSubjects }) {
     </>
   );
 }
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
+const StyledPreviousButton = styled.button`
+  width: 100px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;
+
+const StyledSkipButton = styled.button`
+  width: 80px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+`;
+
+const StyledDoneButton = styled.button`
+  width: 80px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+`;
+
+const StyledCorrectButton = styled.button`
+  margin: 20px 0;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+`;
+
+const StyledIncorrectButton = styled.button`
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.9);
+`;
+
+const Main = styled.main`
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ProgressBarContainer = styled.div`
   background-color: #f3f3f3;
@@ -165,6 +259,7 @@ const IncorrectProgressBarFill = styled.div`
 
 const ResultScreen = styled.div`
   position: fixed;
+  color: #fff;
   top: 0;
   left: 0;
   width: 100%;

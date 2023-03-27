@@ -3,6 +3,7 @@ import { useSubjectUpdater } from "@/hooks/useSubjectUpdater";
 import styled from "styled-components";
 import FlashCardForm from "@/components/Forms/FlashCardForm/FlashCardForm";
 import FlashCardList from "@/components/FlashCards/FlashCardList";
+import Header from "@/components/Header/Header";
 
 export default function Topic({
   subjects,
@@ -59,10 +60,6 @@ export default function Topic({
     </>
   );
 }
-
-const Header = styled.h1`
-  text-align: center;
-`;
 
 const CardsContainer = styled.ul`
   display: flex;

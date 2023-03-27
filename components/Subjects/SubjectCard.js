@@ -49,7 +49,7 @@ export default function SubjectCard({
       {options && (
         <OptionsWrapper>
           <StyledOptionButton onClick={handleTogglePopup}>
-            Options
+            ℹ️
           </StyledOptionButton>
 
           {openedPopup === subject.id && (
@@ -85,7 +85,7 @@ export default function SubjectCard({
   );
 }
 
-const CardContainer = styled.div` 
+const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,8 +93,9 @@ const CardContainer = styled.div`
   margin: 10px;
   border: 2px solid black;
   width: 80%;
-  border-radius: 20px;
-  background-color: ${(props) => props.color};'
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
+  background-color: ${(props) => props.color};
 `;
 
 const OptionsWrapper = styled.div`
@@ -114,6 +115,7 @@ const StyledList = styled.ol`
 `;
 
 const StyledLink = styled(Link)`
+  color: black;
   text-decoration: none;
 `;
 

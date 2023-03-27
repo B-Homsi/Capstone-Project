@@ -32,16 +32,21 @@ export default function FlashCard({
       <Card onClick={handleToggleAnswerClick}>
         <StyledCard color={color} showAnswer={showAnswer}>
           <CardContent>
-            <p>{card.question}</p>
+            <StyledP>{card.question}</StyledP>
           </CardContent>
           <CardContent backFace>
-            <p>{card.answer}</p>
+            <StyledP>{card.answer}</StyledP>
           </CardContent>
         </StyledCard>
       </Card>
     </CardWrapper>
   );
 }
+
+const StyledP = styled.p`
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+`;
 
 const CardWrapper = styled.li`
   list-style: none;
@@ -79,13 +84,15 @@ const CardContent = styled.div`
   top: 0;
   left: 0;
   height: 100%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
   padding: 20px;
   border-radius: 5px;
+  word-break: break-word;
   ${(props) =>
     props.backFace &&
     css`

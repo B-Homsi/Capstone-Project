@@ -33,5 +33,5 @@ const PopupContent = styled.div`
   overflow: scroll;
   max-height: 80%;
   max-width: 80%;
-  border-radius: 20px;
+  border-radius: 5px;
 `;

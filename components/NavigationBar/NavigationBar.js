@@ -3,6 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function NavigationBar({ setShowForm, showForm }) {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function NavigationBar({ setShowForm, showForm }) {
             onClick={handleAddButtonClick}
             disabled={isAddButtonDisabled}
           >
-            Add
+           Add
           </AddButton>
         </Li>
         <Li>
