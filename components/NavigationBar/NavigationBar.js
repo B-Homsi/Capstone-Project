@@ -3,7 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Image from "next/image";
+import AddIcon from "./addIcon.svg";
 
 export default function NavigationBar({ setShowForm, showForm }) {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function NavigationBar({ setShowForm, showForm }) {
             onClick={handleAddButtonClick}
             disabled={isAddButtonDisabled}
           >
-           Add
+            <StyledAddIcon />
           </AddButton>
         </Li>
         <Li>
@@ -57,6 +57,8 @@ export default function NavigationBar({ setShowForm, showForm }) {
   );
 }
 
+const StyledAddIcon = styled(AddIcon)``;
+
 const Nav = styled.nav`
   position: fixed;
   bottom: 0;
@@ -64,7 +66,7 @@ const Nav = styled.nav`
   right: 0;
   background-color: #333;
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 4px;
 `;
 
 const Ul = styled.ul`
@@ -86,6 +88,7 @@ const NavLink = styled(Link)`
 
   &:hover {
     text-decoration: underline;
+    color: yellow;
   }
 `;
 
