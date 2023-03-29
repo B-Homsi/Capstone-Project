@@ -89,7 +89,7 @@ const CardContent = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.9), 1px 1px 3px rgba(0, 0, 0, 0.9);
   padding: 20px;
   border-radius: 5px;
   word-break: break-word;

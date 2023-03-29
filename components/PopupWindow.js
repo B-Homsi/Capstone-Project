@@ -32,6 +32,6 @@ const PopupContent = styled.div`
   padding: 0px;
   overflow: scroll;
   height: 55%;
-  width: 70%;
+  width: 72%;
   border-radius: 5px;
 `;

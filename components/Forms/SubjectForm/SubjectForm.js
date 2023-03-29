@@ -112,14 +112,14 @@ export default function SubjectForm({
             <Submit />
           </StyledSubmitButton>
         </StyledFormHeader>
-
-        <label htmlFor="color">Color: </label>
-        <ColorSelector id="color" value={color} onChange={handleColorChange}>
-          {colors.map((color) => (
-            <ColorOption key={color} value={color} color={color} />
-          ))}
-        </ColorSelector>
-
+        <ColorInput>
+          <label htmlFor="color">Color:</label>
+          <ColorSelector id="color" value={color} onChange={handleColorChange}>
+            {colors.map((color) => (
+              <ColorOption key={color} value={color} color={color} />
+            ))}
+          </ColorSelector>
+        </ColorInput>
         <TitleInput
           value={title}
           onChange={handleTitleChange}
@@ -158,6 +158,15 @@ export default function SubjectForm({
     </PopupWindow>
   );
 }
+
+const ColorInput = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin: 10px 0;
+  `;
 
 const StyledSubmitButton = styled.button`
   border: none;
@@ -198,7 +207,7 @@ const StyledForm = styled.form`
 `;
 
 const ColorSelector = styled.select`
-  width: 17%;
+  width: 15%;
   padding: 4px;
   margin: 4px 0;
   border: 1px solid #ccc;
@@ -209,6 +218,7 @@ const ColorSelector = styled.select`
 
 const ColorOption = styled.option`
   background-color: ${(props) => props.color};
+
 `;
 
 const StyledAddButton = styled.button`

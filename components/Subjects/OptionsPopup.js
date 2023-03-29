@@ -1,18 +1,26 @@
 import styled from "styled-components";
+import Edit from "./edit.svg";
+import Delete from "./delete.svg";
 
 export default function OptionsPopup({ onEdit, onDelete }) {
   return (
     <PopupContainer>
-      <PopupButton onClick={onEdit}>Edit</PopupButton>
-      <PopupButton onClick={onDelete}>Delete</PopupButton>
+      <PopupButton onClick={onEdit}>
+        Edit
+        <Edit />
+      </PopupButton>
+      <PopupButton onClick={onDelete}>
+        Delete
+        <Delete />
+      </PopupButton>
     </PopupContainer>
   );
 }
 
 const PopupContainer = styled.div`
   position: absolute;
-  top: 28px;
-  left: 0;
+  top: 18px;
+  left: 0px;
   background-color: white;
   border: 1px solid black;
   border-radius: 5px;
@@ -21,8 +29,11 @@ const PopupContainer = styled.div`
 `;
 
 const PopupButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-right: 5px;
 `;

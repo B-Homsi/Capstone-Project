@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import OptionsPopup from "./OptionsPopup";
+import Options from "./options.svg";
 
 export default function SubjectCard({
   subject,
@@ -49,7 +50,7 @@ export default function SubjectCard({
       {options && (
         <OptionsWrapper>
           <StyledOptionButton onClick={handleTogglePopup}>
-            ℹ️
+            <Options />
           </StyledOptionButton>
 
           {openedPopup === subject.id && (
@@ -89,12 +90,13 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
   margin: 10px;
   border: 2px solid black;
   width: 80%;
   border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.9), 1px 1px 3px rgba(0, 0, 0, 0.9);
   background-color: ${(props) => props.color};
 `;
 
@@ -103,7 +105,11 @@ const OptionsWrapper = styled.div`
   align-self: flex-end;
 `;
 
-const StyledOptionButton = styled.button``;
+const StyledOptionButton = styled.button`
+  border: none;
+  background-color: transparent;
+  top: 0px;
+  right: 0px;`;
 
 const StyledList = styled.ol`
   width: 90%;
