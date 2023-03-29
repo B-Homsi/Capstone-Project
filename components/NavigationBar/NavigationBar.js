@@ -76,6 +76,7 @@ export default function NavigationBar({ setShowForm, showForm }) {
 const StyledDescription = styled.p`
   margin: 0;
   text-shadow: 2px 2px 4px #000;
+  font-size: 0.9rem;
 `;
 
 const StyledAddIcon = styled(AddIcon)`
