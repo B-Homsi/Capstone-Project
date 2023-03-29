@@ -29,9 +29,9 @@ const PopupOverlay = styled.div`
 
 const PopupContent = styled.div`
   background: ${(props) => props.color};
-  padding: 20px;
+  padding: 0px;
   overflow: scroll;
-  height: 50%;
+  height: 55%;
   width: 70%;
   border-radius: 5px;
 `;

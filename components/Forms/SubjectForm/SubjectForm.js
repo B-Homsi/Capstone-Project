@@ -7,6 +7,9 @@ import TopicInput from "./TopicInput";
 import ErrorMessage from "../ErrorMessage";
 import PopupWindow from "@/components/PopupWindow";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
+import Add from "./add.svg";
+import Back from "./back.svg";
+import Submit from "./submit.svg";
 
 export default function SubjectForm({
   onAddSubject,
@@ -20,6 +23,7 @@ export default function SubjectForm({
     editSubject
       ? editSubject.topics
       : [
+          { id: uid(), title: "" },
           { id: uid(), title: "" },
           { id: uid(), title: "" },
           { id: uid(), title: "" },
@@ -96,16 +100,32 @@ export default function SubjectForm({
       onCancel={onCancel}
       onContentClick={onPopupContentClick}
     >
-      <form onSubmit={handleSubmit}>
-        <button type="button" onClick={onCancel}>
-          X
-        </button>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledFormHeader color={color}>
+          <StyledBackButton type="button" onClick={onCancel}>
+            <Back />
+          </StyledBackButton>
 
-        <button type="submit">{editSubject ? "Update" : "Create"}</button>
+          <h2>{editSubject ? "Edit Subject" : "Add Subject"}</h2>
 
-        <h2>{editSubject ? "Edit Subject" : "Add Subject"}</h2>
+          <StyledSubmitButton type="submit">
+            <Submit />
+          </StyledSubmitButton>
+        </StyledFormHeader>
 
-        <TitleInput value={title} onChange={handleTitleChange} maxLength={22} />
+        <label htmlFor="color">Color: </label>
+        <ColorSelector id="color" value={color} onChange={handleColorChange}>
+          {colors.map((color) => (
+            <ColorOption key={color} value={color} color={color} />
+          ))}
+        </ColorSelector>
+
+        <TitleInput
+          value={title}
+          onChange={handleTitleChange}
+          maxLength={22}
+          color={color}
+        />
         {errors.title && <ErrorMessage>{errors.title}</ErrorMessage>}
 
         <Styledul>
@@ -114,6 +134,7 @@ export default function SubjectForm({
               key={topic.id}
               index={index}
               topic={topic}
+              color={color}
               onTopicChange={handleTopicChange}
               onTopicToDeleteClick={handleTopicToDeleteClick}
               onDeleteTopic={handleDeleteTopic}
@@ -123,17 +144,10 @@ export default function SubjectForm({
           {errors.topics && <ErrorMessage>{errors.topics}</ErrorMessage>}
         </Styledul>
 
-        <button type="button" onClick={handleAddTopic}>
-          +
-        </button>
-
-        <label htmlFor="color">Color</label>
-        <ColorSelector id="color" value={color} onChange={handleColorChange}>
-          {colors.map((color) => (
-            <ColorOption key={color} value={color} color={color} />
-          ))}
-        </ColorSelector>
-      </form>
+        <StyledAddButton type="button" onClick={handleAddTopic}>
+          <Add />
+        </StyledAddButton>
+      </StyledForm>
 
       {topicToDelete && (
         <DeleteConfirmation
@@ -145,13 +159,46 @@ export default function SubjectForm({
   );
 }
 
+const StyledSubmitButton = styled.button`
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: -5px;
+`;
+
+const StyledBackButton = styled.button`
+  border: none;
+  background-color: transparent;
+  padding: 0;
+`;
+
+const StyledFormHeader = styled.header`
+  display: flex;
+  position: sticky;
+  background-color: ${(props) => props.color};
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
 const Styledul = styled.ul`
   list-style: none;
   padding-left: 0;
+  width: 100%;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  padding: 0 10px;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const ColorSelector = styled.select`
-  width: 18%;
+  width: 17%;
   padding: 4px;
   margin: 4px 0;
   border: 1px solid #ccc;
@@ -162,7 +209,10 @@ const ColorSelector = styled.select`
 
 const ColorOption = styled.option`
   background-color: ${(props) => props.color};
-  padding: 8px;
-  font-weight: bold;
-  text-align: center;
+`;
+
+const StyledAddButton = styled.button`
+  border: none;
+  background-color: transparent;
+  align-self: center;
 `;

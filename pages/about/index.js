@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "@/components/Header/Header";
 
 export default function About() {
   return (
     <>
       <Main>
-        <Header>Welcome to IntelliFlash!</Header>
+        <Header>How to use!</Header>
         <Text>
           IntelliFlash is a powerful and user-friendly spaced repetition
           flashcards app designed to help you learn and retain information more
@@ -14,7 +15,7 @@ export default function About() {
           create subjects and topics, add flashcards, review them daily, and
           track your progress.
         </Text>
-        <Header>Getting Started</Header>
+        <Heading>Getting Started</Heading>
         <Text>
           1. <strong>Create Subjects and Topics:</strong> Click the (+) button
           on the homepage to create a new subject, and then add topics within
@@ -31,7 +32,7 @@ export default function About() {
           flashcard, simply click on it to flip the card. This interactive
           feature helps keep you engaged while studying.
         </Text>
-        <Header>Learn Page</Header>
+        <Heading>Learn Page</Heading>
         <Text>
           The Learn Page is where you will review your cards every day. First,
           select the subject you want to study. You will then be taken to the
@@ -40,7 +41,7 @@ export default function About() {
           also skip a card or go back to the previous one. When you have
           finished your learning session, click (Done) to see your results.
         </Text>
-        <Header>Spaced Repetition: The Science Behind IntelliFlash</Header>
+        <Heading>Spaced Repetition: The Science Behind IntelliFlash</Heading>
         <Text>
           Spaced repetition is a proven learning technique that involves
           reviewing information at gradually increasing intervals. This approach
@@ -67,7 +68,7 @@ export default function About() {
             <li>...more increasing intervals</li>
           </ul>
         </Text>
-        <Header>Creating Effective Flashcards with Chunks</Header>
+        <Heading>Creating Effective Flashcards with Chunks</Heading>
         <Text>
           To maximize your learning experience, create flashcards using chunks -
           small, digestible pieces of information. Breaking complex concepts
@@ -112,9 +113,10 @@ export default function About() {
 
 const Main = styled.main`
   color: #fff;
+  margin: 0 20px;
 `;
 
-const Header = styled.h2`
+const Heading = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 8px;
