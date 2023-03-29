@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AddIcon from "./addIcon.svg";
+import Profile from "./profile.svg";
+import Home from "./home.svg";
+import Info from "./info.svg";
+import Learn from "./learn.svg";
 
 export default function NavigationBar({ setShowForm, showForm }) {
   const router = useRouter();
@@ -33,40 +37,62 @@ export default function NavigationBar({ setShowForm, showForm }) {
     <Nav>
       <Ul>
         <Li>
-          <NavLink href="/">Home</NavLink>
+          <NavLink href="/">
+            <Home />
+            <StyledDescription>Home</StyledDescription>
+          </NavLink>
         </Li>
         <Li>
-          <NavLink href="/learn">Learn</NavLink>
+          <NavLink href="/learn">
+            <Learn />
+            <StyledDescription>Learn</StyledDescription>
+          </NavLink>
         </Li>
         <Li>
           <AddButton
             onClick={handleAddButtonClick}
             disabled={isAddButtonDisabled}
           >
-            <StyledAddIcon />
+            <StyledAddIcon disabled={isAddButtonDisabled} />
           </AddButton>
         </Li>
         <Li>
-          <NavLink href="/about">About</NavLink>
+          <NavLink href="/about">
+            <Info />
+            <StyledDescription>About</StyledDescription>
+          </NavLink>
         </Li>
         <Li>
-          <NavLink href="/profile">Profile</NavLink>
+          <NavLink href="/profile">
+            <Profile />
+            <StyledDescription>Profile</StyledDescription>
+          </NavLink>
         </Li>
       </Ul>
     </Nav>
   );
 }
 
-const StyledAddIcon = styled(AddIcon)``;
+const StyledDescription = styled.p`
+  margin: 0;
+  text-shadow: 2px 2px 4px #000;
+`;
+
+const StyledAddIcon = styled(AddIcon)`
+  fill: #fff;
+  &[disabled] {
+    fill: #888;
+  }
+`;
 
 const Nav = styled.nav`
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #333;
+  background-color: #2b3d52;
   z-index: 1000;
-  padding: 4px;
+  padding: 2px;
 `;
 
 const Ul = styled.ul`
@@ -88,7 +114,7 @@ const NavLink = styled(Link)`
 
   &:hover {
     text-decoration: underline;
-    color: yellow;
+    color: #fab005;
   }
 `;
 

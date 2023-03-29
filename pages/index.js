@@ -5,7 +5,7 @@ import Header from "@/components/Header/Header";
 export default function Home({ subjects, setSubjects, showForm, setShowForm }) {
   return (
     <>
-    <Header>Welcome</Header>
+    <Header>Welcome to IntelliFlash</Header>
     <main>
       <Subjects
         subjects={subjects}

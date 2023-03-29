@@ -115,10 +115,10 @@ export default function LearnSubject({ subjects, setSubjects }) {
             />
           )}
           <StyledCorrectButton onClick={handleCorrectClick}>
-            CORRECT
+            <StyledText>CORRECT</StyledText>
           </StyledCorrectButton>
           <StyledIncorrectButton onClick={handleIncorrectClick}>
-            INCORRECT
+            <StyledText>INCORRECT</StyledText>
           </StyledIncorrectButton>
         </Main>
       )}
@@ -135,6 +135,11 @@ export default function LearnSubject({ subjects, setSubjects }) {
     </>
   );
 }
+
+const StyledText = styled.p`
+  text-shadow: 1px 1px 8px #000;
+  margin: 0;
+`;
 
 const StyledButtonContainer = styled.div`
   display: flex;

@@ -31,7 +31,7 @@ const PopupContent = styled.div`
   background: ${(props) => props.color};
   padding: 20px;
   overflow: scroll;
-  max-height: 80%;
-  max-width: 80%;
+  height: 50%;
+  width: 70%;
   border-radius: 5px;
 `;

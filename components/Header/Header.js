@@ -7,4 +7,5 @@ export default function Header({ children }) {
 const StyledHeader = styled.h1`
   text-align: center;
   color: #fff;
+  text-shadow: 2px 2px 4px #000; ;
 `;
