@@ -61,7 +61,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
       const updatedSubjects = updateLastReview(correctCardIds, subjects);
       setSubjects(updatedSubjects);
       router.push("/learn");
-    }, 600000);
+    }, 6000);
   };
 
   const getMotivationalMessage = (percentage) => {
@@ -123,20 +123,45 @@ export default function LearnSubject({ subjects, setSubjects }) {
         </Main>
       )}
       <ResultScreen showResultScreen={showResultScreen}>
-        <h3>{getMotivationalMessage(correctPercentage)}</h3>
-        <h2>Results</h2>
-        <p>
-          Correct: {correctCardCount} ({correctPercentage}%)
-        </p>
-        <p>
-          Incorrect: {incorrectCardCount} ({100 - correctPercentage}%)
-        </p>
+        <StyledH3>{getMotivationalMessage(correctPercentage)}</StyledH3>
+        <ResultsConainer>
+          <StyledH2>Results</StyledH2>
+          <StyledResultText>
+            Correct: {correctCardCount} ({correctPercentage}%)
+          </StyledResultText>
+          <StyledResultText>
+            Incorrect: {incorrectCardCount} ({100 - correctPercentage}%)
+          </StyledResultText>
+        </ResultsConainer>
       </ResultScreen>
     </>
   );
 }
 
+const StyledH2 = styled.h2`
+  text-shadow: 1px 1px 8px #000;
+`;
+
+const StyledH3 = styled.h3`
+  text-shadow: 1px 1px 8px #000;
+  margin: 0 20px 120px 20px;
+  text-align: center;
+`;
+
+const StyledResultText = styled.p`
+  margin: 0;
+  text-shadow: 1px 1px 8px #000;
+`;
+
+const ResultsConainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ResultScreen = styled.div`
+  position: fixed;
   color: #fff;
   top: 0;
   left: 0;
@@ -149,7 +174,7 @@ const ResultScreen = styled.div`
   justify-content: center;
   opacity: ${(props) => (props.showResultScreen ? "1" : "0")};
   visibility: ${(props) => (props.showResultScreen ? "visible" : "hidden")};
-  transition: opacity 1s ease, visibility 1s ease;
+  transition: opacity 2s ease, visibility 2s ease;
 `;
 
 const StyledText = styled.p`
@@ -265,12 +290,11 @@ const ProgressBarContainer = styled.div`
 
 const AnimatedProgressBarContainer = styled(ProgressBarContainer)`
   position: ${(props) => (props.showResultScreen ? "fixed" : "relative")};
-  top: ${(props) => (props.showResultScreen ? "44%" : "auto")};
-  left: ${(props) =>
-    props.showResultScreen ? "0" : "auto"};
+  top: ${(props) => (props.showResultScreen ? "20%" : "auto")};
+  left: ${(props) => (props.showResultScreen ? "0" : "auto")};
   transform: ${(props) =>
-    props.showResultScreen ? "translateY(-50%)" : "none"};
-  transition: top 1s ease, left 1s ease, transform 1s ease;
+    props.showResultScreen ? "translateY(550%)" : "none"};
+  transition: top 2s ease, left 2s ease, transform 2s ease;
 `;
 
 const ProgressText = styled.span`

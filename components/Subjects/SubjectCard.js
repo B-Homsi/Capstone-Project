@@ -62,7 +62,7 @@ export default function SubjectCard({
         </OptionsWrapper>
       )}
 
-      <h2>{subject.title}</h2>
+      <StyledTitle>{subject.title}</StyledTitle>
       {cardsForReviewToday && (
         <p>Cards for review today: {cardsForReviewToday.length}</p>
       )}
@@ -76,7 +76,8 @@ export default function SubjectCard({
               onClick={handleTopicLinkClick}
             >
               <StyledTopic>
-                {topic?.title} <p>Cards: {topic.cards?.length || 0}</p>
+                {topic?.title}{" "}
+                <StyledText>Cards: {topic.cards?.length || 0}</StyledText>
               </StyledTopic>
             </StyledLink>
           ))}
@@ -85,6 +86,12 @@ export default function SubjectCard({
     </CardContainer>
   );
 }
+
+const StyledText = styled.p`
+  margin: 5px 0;
+`;
+
+const StyledTitle = styled.h2``;
 
 const CardContainer = styled.div`
   display: flex;
@@ -109,7 +116,8 @@ const StyledOptionButton = styled.button`
   border: none;
   background-color: transparent;
   top: 0px;
-  right: 0px;`;
+  right: 0px;
+`;
 
 const StyledList = styled.ol`
   width: 90%;
@@ -126,11 +134,10 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledTopic = styled.li`
-  padding: 15px 10px;
   margin: 5px;
   text-align: center;
-  border: 1px solid black;
-  border-radius: 5px;
+  border: 1px solid #333;
+  border-radius: 4px;
   background-color: #f5f5f5;
   padding: 5px;
 `;

@@ -35,5 +35,7 @@ const PopupButton = styled.button`
   width: 100%;
   background-color: transparent;
   border: none;
+  font-size: 16px;
   cursor: pointer;
+  padding: 5px 5px;
 `;
