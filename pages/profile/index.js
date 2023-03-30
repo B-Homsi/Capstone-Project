@@ -1,7 +1,10 @@
+import Header from "@/components/Header/Header";
+
 export default function Profile() {
   return (
-    <main>
-      <h1>Profile</h1>
-    </main>
+    <>
+      <Header>Profile</Header>
+      <main></main>
+    </>
   );
 }

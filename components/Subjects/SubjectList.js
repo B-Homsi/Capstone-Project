@@ -19,7 +19,6 @@ export default function SubjectList({
       {inLearnPage &&
         subjects.map((subject) => {
           const cardsForReviewToday = getCardsForReviewSubject(subject);
-
           return (
             <StyledLink key={subject.id} href={`/learn/${subject.id}`}>
               <SubjectCard
@@ -53,5 +52,8 @@ export default function SubjectList({
 const StyledLink = styled(Link)`
   color: black;
   text-decoration: none;
-  width: 80%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

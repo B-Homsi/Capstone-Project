@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import OptionsPopup from "./OptionsPopup";
+import Options from "./options.svg";
 
 export default function SubjectCard({
   subject,
@@ -49,7 +50,7 @@ export default function SubjectCard({
       {options && (
         <OptionsWrapper>
           <StyledOptionButton onClick={handleTogglePopup}>
-            Options
+            <Options />
           </StyledOptionButton>
 
           {openedPopup === subject.id && (
@@ -61,7 +62,7 @@ export default function SubjectCard({
         </OptionsWrapper>
       )}
 
-      <h2>{subject.title}</h2>
+      <StyledTitle>{subject.title}</StyledTitle>
       {cardsForReviewToday && (
         <p>Cards for review today: {cardsForReviewToday.length}</p>
       )}
@@ -75,7 +76,8 @@ export default function SubjectCard({
               onClick={handleTopicLinkClick}
             >
               <StyledTopic>
-                {topic?.title} <p>Cards: {topic.cards?.length || 0}</p>
+                {topic?.title}{" "}
+                <StyledText>Cards: {topic.cards?.length || 0}</StyledText>
               </StyledTopic>
             </StyledLink>
           ))}
@@ -85,16 +87,24 @@ export default function SubjectCard({
   );
 }
 
-const CardContainer = styled.div` 
+const StyledText = styled.p`
+  margin: 5px 0;
+`;
+
+const StyledTitle = styled.h2``;
+
+const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
   margin: 10px;
   border: 2px solid black;
   width: 80%;
-  border-radius: 20px;
-  background-color: ${(props) => props.color};'
+  border-radius: 5px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.9), 1px 1px 3px rgba(0, 0, 0, 0.9);
+  background-color: ${(props) => props.color};
 `;
 
 const OptionsWrapper = styled.div`
@@ -102,7 +112,12 @@ const OptionsWrapper = styled.div`
   align-self: flex-end;
 `;
 
-const StyledOptionButton = styled.button``;
+const StyledOptionButton = styled.button`
+  border: none;
+  background-color: transparent;
+  top: 0px;
+  right: 0px;
+`;
 
 const StyledList = styled.ol`
   width: 90%;
@@ -114,15 +129,15 @@ const StyledList = styled.ol`
 `;
 
 const StyledLink = styled(Link)`
+  color: black;
   text-decoration: none;
 `;
 
 const StyledTopic = styled.li`
-  padding: 15px 10px;
   margin: 5px;
   text-align: center;
-  border: 1px solid black;
-  border-radius: 5px;
+  border: 1px solid #333;
+  border-radius: 4px;
   background-color: #f5f5f5;
   padding: 5px;
 `;

@@ -13,7 +13,7 @@ export const exampleData = [
           {
             id: uid(),
             question: "List all primitive Types.",
-            answer: "number, boolean, string, ...",
+            answer: "number, boolean, string, null, undefined, symbol",
             lastReviewed: null,
             stage: 0,
           },
@@ -181,26 +181,213 @@ export const exampleData = [
           },
         ],
       },
-      { id: uid(), title: "Objects" },
+      {
+        id: uid(),
+        title: "Objects",
+        cards: [
+          {
+            id: uid(),
+            question:
+              "What is the difference between a shallow copy and a deep copy?",
+            answer:
+              "A shallow copy creates a new object that references the same objects as the original object. A deep copy creates a new object that references new objects.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "Which loop is best for iterating over an object?",
+            answer: "for...in",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "How do you define a getter?",
+            answer: "get foo() { ... }",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "How do you define a setter?",
+            answer: "set foo(bar) { ... }",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
     ],
   },
   {
     id: uid(),
     title: "Backend",
-    color: "#228be6",
+    color: "#6A97F0",
     topics: [
-      { id: uid(), title: "Node.js" },
-      { id: uid(), title: "Express" },
-      { id: uid(), title: "MongoDB" },
+      {
+        id: uid(),
+        title: "Node.js",
+        cards: [
+          {
+            id: uid(),
+            question:
+              "What is the difference between a synchronous and an asynchronous function?",
+            answer:
+              "A synchronous function blocks the main thread. An asynchronous function does not block the main thread.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question:
+              "What is the difference between a callback function and a promise?",
+            answer:
+              "A callback function accepts a callback function as an argument. A promise accepts a resolve and reject function as arguments.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is an event loop?",
+            answer:
+              "A queue that processes asynchronous tasks in the order in which they were received.",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
+      {
+        id: uid(),
+        title: "Express",
+        cards: [
+          {
+            id: uid(),
+            question:
+              "What is the difference between a middleware function and a route handler?",
+            answer:
+              "A middleware function accepts a request, response, and next function as arguments. A route handler accepts a request and response function as arguments.",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
+      {
+        id: uid(),
+        title: "MongoDB",
+        cards: [
+          {
+            id: uid(),
+            question:
+              "What is the difference between a relational database and a non-relational database?",
+            answer:
+              "A relational database stores data in tables. A non-relational database stores data in documents.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is a primary key?",
+            answer: "A primary key is a unique identifier for a document.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is a foreign key?",
+            answer:
+              "A foreign key is a reference to a primary key in another document.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is a one-to-one relationship?",
+            answer:
+              "A one-to-one relationship is a relationship between two documents where each document references the other document.",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
     ],
   },
   {
     id: uid(),
     title: "Mathematics",
-    color: "#e64980",
+    color: "#bf5892",
     topics: [
-      { id: uid(), title: "Precalculus" },
-      { id: uid(), title: "Calculus" },
+      {
+        id: uid(),
+        title: "Precalculus",
+        cards: [
+          {
+            id: uid(),
+            question: "What is a function?",
+            answer:
+              "A function is a rule that assigns a unique output to each unique input.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is a domain?",
+            answer:
+              "The domain of a function is the set of all possible inputs.",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
+
+      {
+        id: uid(),
+        title: "Algebra",
+        cards: [
+          {
+            id: uid(),
+            question: "What is a variable?",
+            answer: "A variable is a symbol that represents a number.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is an expression?",
+            answer:
+              "An expression is a combination of variables, numbers, and operators.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is an equation?",
+            answer: "An equation is an expression that is equal to zero.",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
+      {
+        id: uid(),
+        title: "Calculus",
+        cards: [
+          {
+            id: uid(),
+            question: "What is the derivative of a function?",
+            answer:
+              "The derivative of a function is the slope of the tangent line at a point.",
+            lastReviewed: null,
+            stage: 0,
+          },
+          {
+            id: uid(),
+            question: "What is the integral of a function?",
+            answer: "The integral of a function is the area under the curve.",
+            lastReviewed: null,
+            stage: 0,
+          },
+        ],
+      },
       { id: uid(), title: "Linear Algebra" },
       { id: uid(), title: "Differential Equations" },
       { id: uid(), title: "Partial Differential Equations" },

@@ -4,6 +4,7 @@ import { getCardsForReviewSubject } from "@/utils/getCardsForReviewSubject";
 import { updateLastReview } from "@/utils/updateLastReview";
 import FlashCard from "@/components/FlashCards/FlashCard";
 import styled from "styled-components";
+import Header from "@/components/Header/Header";
 
 export default function LearnSubject({ subjects, setSubjects }) {
   const router = useRouter();
@@ -60,7 +61,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
       const updatedSubjects = updateLastReview(correctCardIds, subjects);
       setSubjects(updatedSubjects);
       router.push("/learn");
-    }, 8000);
+    }, 2000);
   };
 
   const getMotivationalMessage = (percentage) => {
@@ -75,7 +76,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
 
   return (
     <>
-      <h1>{subject.title}</h1>
+      <Header>{subject.title}</Header>
       <AnimatedProgressBarContainer showResultScreen={showResultScreen}>
         <ProgressBarFill percentage={progressPercentage} />
         <IncorrectProgressBarFill
@@ -89,36 +90,195 @@ export default function LearnSubject({ subjects, setSubjects }) {
         </ProgressText>
       </AnimatedProgressBarContainer>
       {!showResultScreen && cardsForReviewToday.length > 0 && (
-        <>
-          <button onClick={handlePreviousClick}>Previous</button>
-          {isLastCard ? (
-            <button onClick={handleDoneClick}>Done</button>
-          ) : (
-            <button onClick={handleSkipClick}>Skip</button>
-          )}
+        <Main>
+          <StyledButtonContainer>
+            <StyledPreviousButton
+              onClick={handlePreviousClick}
+              disabled={currentCardIndex === 0 ? true : false}
+            >
+              PREVIOUS
+            </StyledPreviousButton>
+            {isLastCard ? (
+              <StyledDoneButton onClick={handleDoneClick}>
+                DONE
+              </StyledDoneButton>
+            ) : (
+              <StyledSkipButton onClick={handleSkipClick}>
+                SKIP
+              </StyledSkipButton>
+            )}
+          </StyledButtonContainer>
           {cardsForReviewToday[currentCardIndex] && (
             <FlashCard
               card={cardsForReviewToday[currentCardIndex]}
               color={subject.color}
             />
           )}
-          <button onClick={handleIncorrectClick}>Incorrect</button>
-          <button onClick={handleCorrectClick}>Correct</button>
-        </>
+          <StyledCorrectButton onClick={handleCorrectClick}>
+            <StyledText>CORRECT</StyledText>
+          </StyledCorrectButton>
+          <StyledIncorrectButton onClick={handleIncorrectClick}>
+            <StyledText>INCORRECT</StyledText>
+          </StyledIncorrectButton>
+        </Main>
       )}
       <ResultScreen showResultScreen={showResultScreen}>
-        <h3>{getMotivationalMessage(correctPercentage)}</h3>
-        <h2>Results</h2>
-        <p>
-          Correct: {correctCardCount} ({correctPercentage}%)
-        </p>
-        <p>
-          Incorrect: {incorrectCardCount} ({100 - correctPercentage}%)
-        </p>
+        <StyledH3>{getMotivationalMessage(correctPercentage)}</StyledH3>
+        <ResultsConainer>
+          <StyledH2>Results</StyledH2>
+          <StyledResultText>
+            Correct: {correctCardCount} ({correctPercentage}%)
+          </StyledResultText>
+          <StyledResultText>
+            Incorrect: {incorrectCardCount} ({100 - correctPercentage}%)
+          </StyledResultText>
+        </ResultsConainer>
       </ResultScreen>
     </>
   );
 }
+
+const StyledH2 = styled.h2`
+  text-shadow: 1px 1px 8px #000;
+`;
+
+const StyledH3 = styled.h3`
+  text-shadow: 1px 1px 8px #000;
+  margin: 0 20px 120px 20px;
+  text-align: center;
+`;
+
+const StyledResultText = styled.p`
+  margin: 0;
+  text-shadow: 1px 1px 8px #000;
+`;
+
+const ResultsConainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ResultScreen = styled.div`
+  position: fixed;
+  color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: ${(props) => (props.showResultScreen ? "1" : "0")};
+  visibility: ${(props) => (props.showResultScreen ? "visible" : "hidden")};
+  transition: opacity 2s ease, visibility 2s ease;
+`;
+
+const StyledText = styled.p`
+  text-shadow: 1px 1px 8px #000;
+  margin: 0;
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
+const StyledPreviousButton = styled.button`
+  width: 100px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+`;
+
+const StyledSkipButton = styled.button`
+  width: 80px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
+`;
+
+const StyledDoneButton = styled.button`
+  width: 80px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
+`;
+
+const StyledCorrectButton = styled.button`
+  margin: 20px 0;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  &:active {
+    opacity: 0.6;
+  }
+`;
+
+const StyledIncorrectButton = styled.button`
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.9);
+
+  &:active {
+    opacity: 0.6;
+  }
+`;
+
+const Main = styled.main`
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ProgressBarContainer = styled.div`
   background-color: #f3f3f3;
@@ -130,12 +290,11 @@ const ProgressBarContainer = styled.div`
 
 const AnimatedProgressBarContainer = styled(ProgressBarContainer)`
   position: ${(props) => (props.showResultScreen ? "fixed" : "relative")};
-  top: ${(props) => (props.showResultScreen ? "44%" : "auto")};
-  left: ${(props) =>
-    props.showResultScreen ? "0" : "auto"}; // Change this line
+  top: ${(props) => (props.showResultScreen ? "20%" : "auto")};
+  left: ${(props) => (props.showResultScreen ? "0" : "auto")};
   transform: ${(props) =>
-    props.showResultScreen ? "translateY(-50%)" : "none"}; // Change this line
-  transition: top 1s ease, left 1s ease, transform 1s ease;
+    props.showResultScreen ? "translateY(550%)" : "none"};
+  transition: top 2s ease, left 2s ease, transform 2s ease;
 `;
 
 const ProgressText = styled.span`
@@ -161,20 +320,4 @@ const IncorrectProgressBarFill = styled.div`
   height: 100%;
   width: ${(props) => props.percentage}%;
   margin-left: ${(props) => props.marginLeftPercentage}%;
-`;
-
-const ResultScreen = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: ${(props) => (props.showResultScreen ? "1" : "0")};
-  visibility: ${(props) => (props.showResultScreen ? "visible" : "hidden")};
-  transition: opacity 1s ease, visibility 1s ease;
 `;
