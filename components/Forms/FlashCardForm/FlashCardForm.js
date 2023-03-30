@@ -105,7 +105,7 @@ export default function FlashCardForm({
               name="answer"
               rows="5"
               cols="32"
-              maxLength="100"
+              maxLength="140"
               placeholder="Write down the answer"
               value={inputField.answer}
               onChange={(event) => handleInputChange(index, event)}
@@ -162,24 +162,27 @@ const StyledAddButton = styled.button`
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;`;
+  align-items: center;
+`;
 
-  const StyledDeleteButton = styled.button`
+const StyledDeleteButton = styled.button`
   border: none;
-  background-color: transparent;`;
+  background-color: transparent;
+`;
 
-  const StyledTextArea = styled.textarea`
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-    padding: 5px;
+const StyledTextArea = styled.textarea`
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  padding: 5px;
 
-    &::placeholder {
-      color: #333;
-      font-style: italic;
-    }
-  `;
+  &::placeholder {
+    color: #333;
+    font-style: italic;
+  }
+`;
 
-  const StyledText = styled.p`
-  margin: 0 0 10px 0;`;
+const StyledText = styled.p`
+  margin: 0 0 10px 0;
+`;

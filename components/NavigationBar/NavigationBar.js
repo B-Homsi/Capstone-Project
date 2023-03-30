@@ -93,7 +93,7 @@ const Nav = styled.nav`
   right: 0;
   background-color: #2b3d52;
   z-index: 1000;
-  padding: 2px;
+  padding: 4px 0 10px 0px;
 `;
 
 const Ul = styled.ul`
