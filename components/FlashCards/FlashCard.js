@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import Delete from "./delete.svg";
 
 export default function FlashCard({
   card,
@@ -26,7 +27,7 @@ export default function FlashCard({
             onDeleteCard(card.id);
           }}
         >
-          X
+          <Delete/>
         </StyledDeleteButton>
       )}
       <Card onClick={handleToggleAnswerClick}>
@@ -102,16 +103,10 @@ const CardContent = styled.div`
 
 const StyledDeleteButton = styled.button`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 2px;
   background-color: transparent;
   border: none;
-  font-size: 1.5rem;
   z-index: 1;
   opacity: 1;
-  ${(props) =>
-    props.hide &&
-    css`
-      opacity: 0;
-    `}
 `;

@@ -7,9 +7,9 @@ import TopicInput from "./TopicInput";
 import ErrorMessage from "../ErrorMessage";
 import PopupWindow from "@/components/PopupWindow";
 import DeleteConfirmation from "@/components/DeleteConfirmation";
-import Add from "./add.svg";
-import Back from "./back.svg";
-import Submit from "./submit.svg";
+import Add from "../add.svg";
+import Back from "../back.svg";
+import Submit from "../submit.svg";
 
 export default function SubjectForm({
   onAddSubject,
@@ -162,11 +162,11 @@ export default function SubjectForm({
 const ColorInput = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 10px;
   width: 100%;
   margin: 10px 0;
-  `;
+`;
 
 const StyledSubmitButton = styled.button`
   border: none;
@@ -218,7 +218,6 @@ const ColorSelector = styled.select`
 
 const ColorOption = styled.option`
   background-color: ${(props) => props.color};
-
 `;
 
 const StyledAddButton = styled.button`

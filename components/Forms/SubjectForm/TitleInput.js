@@ -27,4 +27,9 @@ const StyledInput = styled.input`
   margin: 4px;
   padding: 3px;
   font-size: 14px;
+
+  &::placeholder {
+    color: #333;
+    font-style: italic;
+  }
 `;

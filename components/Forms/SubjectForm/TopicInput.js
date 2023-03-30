@@ -1,4 +1,4 @@
-import Remove from "./remove.svg";
+import Remove from "../remove.svg";
 import styled from "styled-components";
 
 export default function TopicInput({
@@ -21,7 +21,7 @@ export default function TopicInput({
             value={topic.title}
             color={color}
             onChange={(event) => onTopicChange(topic.id, event)}
-            maxLength={28}
+            maxLength={20}
             required
           />
         </label>
@@ -61,4 +61,9 @@ const StyledInput = styled.input`
   margin: 4px;
   padding: 3px;
   font-size: 14px;
+
+  &::placeholder {
+    color: #333;
+    font-style: italic;
+  }
 `;

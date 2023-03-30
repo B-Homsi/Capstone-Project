@@ -61,7 +61,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
       const updatedSubjects = updateLastReview(correctCardIds, subjects);
       setSubjects(updatedSubjects);
       router.push("/learn");
-    }, 6000);
+    }, 600000);
   };
 
   const getMotivationalMessage = (percentage) => {
@@ -135,6 +135,22 @@ export default function LearnSubject({ subjects, setSubjects }) {
     </>
   );
 }
+
+const ResultScreen = styled.div`
+  color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: ${(props) => (props.showResultScreen ? "1" : "0")};
+  visibility: ${(props) => (props.showResultScreen ? "visible" : "hidden")};
+  transition: opacity 1s ease, visibility 1s ease;
+`;
 
 const StyledText = styled.p`
   text-shadow: 1px 1px 8px #000;
@@ -251,9 +267,9 @@ const AnimatedProgressBarContainer = styled(ProgressBarContainer)`
   position: ${(props) => (props.showResultScreen ? "fixed" : "relative")};
   top: ${(props) => (props.showResultScreen ? "44%" : "auto")};
   left: ${(props) =>
-    props.showResultScreen ? "0" : "auto"}; // Change this line
+    props.showResultScreen ? "0" : "auto"};
   transform: ${(props) =>
-    props.showResultScreen ? "translateY(-50%)" : "none"}; // Change this line
+    props.showResultScreen ? "translateY(-50%)" : "none"};
   transition: top 1s ease, left 1s ease, transform 1s ease;
 `;
 
@@ -280,21 +296,4 @@ const IncorrectProgressBarFill = styled.div`
   height: 100%;
   width: ${(props) => props.percentage}%;
   margin-left: ${(props) => props.marginLeftPercentage}%;
-`;
-
-const ResultScreen = styled.div`
-  position: fixed;
-  color: #fff;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: ${(props) => (props.showResultScreen ? "1" : "0")};
-  visibility: ${(props) => (props.showResultScreen ? "visible" : "hidden")};
-  transition: opacity 1s ease, visibility 1s ease;
 `;
