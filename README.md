@@ -1,38 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# IntelliFlash
 
-## Getting Started
+![IntelliFlasho](https://user-images.githubusercontent.com/117512929/229495929-9c086c85-99f0-420b-98b4-81a15ad32203.png)
+![Results](https://user-images.githubusercontent.com/117512929/229495931-3102c8bb-53ea-460c-8e82-3aea0ea9fa4e.png)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Description
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+IntelliFlash is a powerful and user-friendly spaced repetition
+flashcards app designed to help you learn and retain information more
+effectively. The app is built using React and Next.js, ensuring a
+seamless and efficient learning experience. In IntelliFlash, you can
+create subjects and topics, add flashcards, review them daily, and
+track your progress.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Demo
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Go to the hosted Page [here](https://capstone-project-kappa-orpin.vercel.app/) (the design is currently optimized for IPhone SE)
+1. Create Subjects and Topics: Click the (+) button
+on the homepage to create a new subject, and then add topics within
+that subject. This allows you to organize your learning material based
+on your interests and needs.
+2. Add Flashcards: Navigate to a specific topic by
+selecting a subject and clicking on the desired topic. Once there, you
+can add flashcards by clicking the (+) button on the navbar.
+3. Review Flashcards on Learn Page: Choose a Subject. To see the answer on a
+flashcard, simply click on it to flip the card.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Project Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Clone this repository
+- Inside the root folder install all dependencies via `$ npm install`
+- Run app in development mode via `$ npm run dev`
+- Run tests via `$ npm run test`
