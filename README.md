@@ -3,8 +3,6 @@
 
 ![IntelliFlasho](https://user-images.githubusercontent.com/117512929/229495929-9c086c85-99f0-420b-98b4-81a15ad32203.png)
 ![Results](https://user-images.githubusercontent.com/117512929/229495931-3102c8bb-53ea-460c-8e82-3aea0ea9fa4e.png)
-![IntelliFlasho](https://user-images.githubusercontent.com/117512929/229495929-9c086c85-99f0-420b-98b4-81a15ad32203.png)
-![Results](https://user-images.githubusercontent.com/117512929/229495931-3102c8bb-53ea-460c-8e82-3aea0ea9fa4e.png)
 
 ## Description
 
