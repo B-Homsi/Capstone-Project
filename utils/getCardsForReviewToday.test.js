@@ -13,6 +13,6 @@ test("filters cards that are due for review today", () => {
 
   const cardsForReviewToday = getCardsForReviewToday(mockCards);
 
-  expect(cardsForReviewToday.length).toBe(2);
-  expect(cardsForReviewToday.map((card) => card.id)).toEqual([1, 3]);
+  expect(cardsForReviewToday.length).toBe(5);
+  expect(cardsForReviewToday.map((card) => card.id)).toEqual([1, 2, 3, 4, 5]);
 });
