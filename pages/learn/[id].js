@@ -61,7 +61,7 @@ export default function LearnSubject({ subjects, setSubjects }) {
       const updatedSubjects = updateLastReview(correctCardIds, subjects);
       setSubjects(updatedSubjects);
       router.push("/learn");
-    }, 2000);
+    }, 4000);
   };
 
   const getMotivationalMessage = (percentage) => {
